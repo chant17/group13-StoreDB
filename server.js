@@ -14,14 +14,17 @@ app.set("layout", "layouts/layout");
 app.use(expressLayouts);
 app.use(express.static("public"));
 
-const mongoose = require("mongoose");
-mongoose.connect(process.env.DATABASE_URL, {
-  useNewUrlParser: true
+const mysql = require("mysql");
+const connection = mysql.createConnection({
+  host: "localhost",
+  user: "root",
+  password: "password"
 });
 
-const db = mongoose.connection;
-db.on("error", error => console.error(error));
-db.once("open", () => console.log("Connected to Mongoose"));
+connection.connect(err => {
+  if (err) throw err;
+  console.log("Connected to Store Database");
+});
 
 app.use("/", indexRouter);
 
