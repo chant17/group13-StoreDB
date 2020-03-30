@@ -1,7 +1,7 @@
 {
   "name": "group13-StoreDB",
   "version": "1.0.0",
-  "description": "",
+  "description": "Database Project - Team13",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
@@ -19,9 +19,11 @@
   },
   "homepage": "https://github.com/chant17/group13-StoreDB#readme",
   "dependencies": {
+    "body-parser": "^1.19.0",
     "ejs": "^3.0.1",
     "express": "^4.17.1",
     "express-ejs-layouts": "^2.5.0",
+    "express-handlebars": "^4.0.0",
     "mongodb": "^3.5.4",
     "mongoose": "^5.9.2",
     "mysql": "^2.18.1"

@@ -23,9 +23,10 @@ USE `store_database` ;
 -- -----------------------------------------------------
 -- Table `store_database`.`customer`
 -- -----------------------------------------------------
+
 CREATE TABLE IF NOT EXISTS `store_database`.`customer` (
-  `membership_ID` INT NOT NULL AUTO_INCREMENT,
-  `FK_customer_cart` INT NOT NULL,
+  `membership_ID` INT NOT NULL DEFAULT 0,
+  `FK_customer_cart` INT NOT NULL DEFAULT 0,
   `username` VARCHAR(32) NULL DEFAULT NULL,
   `first_name` VARCHAR(50) NULL DEFAULT NULL,
   `last_name` VARCHAR(50) NULL DEFAULT NULL,
@@ -37,7 +38,7 @@ CREATE TABLE IF NOT EXISTS `store_database`.`customer` (
   `state` VARCHAR(32) NULL DEFAULT NULL,
   `zip_code` VARCHAR(32) NULL DEFAULT NULL,
   `country` VARCHAR(32) NULL DEFAULT NULL,
-  `store_credit` DECIMAL(19,2) NULL DEFAULT NULL,
+  `store_credit` DECIMAL(19,2) NULL DEFAULT 0,
   PRIMARY KEY (`membership_ID`),
   INDEX `FK_customer_cart` (`FK_customer_cart` ASC) VISIBLE,
   CONSTRAINT `customer_ibfk_1`
@@ -52,12 +53,12 @@ COLLATE = utf8mb4_0900_ai_ci;
 -- Table `store_database`.`department`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `store_database`.`department` (
-  `department_ID` INT NOT NULL,
+  `department_ID` INT NOT NULL DEFAULT 0,
   `department_name` VARCHAR(50) NULL DEFAULT NULL,
   `text_descridepartmentption` VARCHAR(255) NULL DEFAULT NULL,
   `html_tag` VARCHAR(255) NULL DEFAULT NULL,
   `image` VARCHAR(100) NULL DEFAULT NULL,
-  `FK_MEMBERSHIP_ID` INT NOT NULL,
+  `FK_MEMBERSHIP_ID` INT NOT NULL DEFAULT 0,
   PRIMARY KEY (`department_ID`),
   INDEX `FK_MEMBERSHIP_ID` (`FK_MEMBERSHIP_ID` ASC) VISIBLE,
   CONSTRAINT `department_ibfk_1`
@@ -72,8 +73,8 @@ COLLATE = utf8mb4_0900_ai_ci;
 -- Table `store_database`.`product`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `store_database`.`product` (
-  `product_ID` INT NOT NULL,
-  `FK_product_dept_id` INT NOT NULL,
+  `product_ID` INT NOT NULL DEFAULT 0,
+  `FK_product_dept_id`  INT NOT NULL DEFAULT 0,
   `product_name` VARCHAR(50) NULL DEFAULT NULL,
   `product_desc` VARCHAR(255) NULL DEFAULT NULL,
   `vendor` VARCHAR(50) NULL DEFAULT NULL,
@@ -94,9 +95,9 @@ COLLATE = utf8mb4_0900_ai_ci;
 -- Table `store_database`.`cart`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `store_database`.`cart` (
-  `cart_ID` INT NOT NULL AUTO_INCREMENT,
-  `FK_product_cart` INT NOT NULL,
-  `transaction_ID` INT NOT NULL,
+  `cart_ID` INT NOT NULL DEFAULT 0,
+  `FK_product_cart` INT NOT NULL DEFAULT 0,
+  `transaction_ID` INT NOT NULL DEFAULT 0,
   `cart_description` VARCHAR(255) NULL DEFAULT NULL,
   `total_price` DECIMAL(19,2) NULL DEFAULT NULL,
   `quantity` INT NOT NULL,
@@ -114,8 +115,8 @@ COLLATE = utf8mb4_0900_ai_ci;
 -- Table `store_database`.`payment_information`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `store_database`.`payment_information` (
-  `checkNum` VARCHAR(255) NOT NULL,
-  `FK_customer_payment` INT NULL DEFAULT NULL,
+  `checkNum` VARCHAR(255) NOT NULL DEFAULT 0,
+  `FK_customer_payment` INT NULL DEFAULT 0,
   `payment_date` DATE NULL DEFAULT NULL,
   `amount` DECIMAL(19,2) NULL DEFAULT NULL,
   PRIMARY KEY (`checkNum`),
@@ -132,10 +133,10 @@ COLLATE = utf8mb4_0900_ai_ci;
 -- Table `store_database`.`order_information`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `store_database`.`order_information` (
-  `transaction_ID` INT NOT NULL,
-  `FK_member_transaction` INT NOT NULL,
-  `FK_cart_transaction` INT NOT NULL,
-  `FK_payment_ID` VARCHAR(255) NULL DEFAULT NULL,
+  `transaction_ID` INT NOT NULL DEFAULT 0,
+  `FK_member_transaction` INT NOT NULL DEFAULT 0,
+  `FK_cart_transaction` INT NOT NULL DEFAULT 0,
+  `FK_payment_ID` VARCHAR(255) NULL DEFAULT 0,
   `order_date` DATE NULL DEFAULT NULL,
   `expected_Delivery` DATE NULL DEFAULT NULL,
   `shipped_Date` DATE NULL DEFAULT NULL,
@@ -162,11 +163,11 @@ COLLATE = utf8mb4_0900_ai_ci;
 -- Table `store_database`.`employee`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `store_database`.`employee` (
-  `employee_ID` INT NULL DEFAULT NULL,
-  `FK_member_employee` INT NULL DEFAULT NULL,
-  `FK_office_employee` INT NULL DEFAULT NULL,
-  `FK_transaction_employee` INT NULL DEFAULT NULL,
-  `FK_supervisor_ID` INT NULL DEFAULT NULL,
+  `employee_ID` INT NULL DEFAULT 0,
+  `FK_member_employee` INT NULL DEFAULT 0,
+  `FK_office_employee` INT NULL DEFAULT 0,
+  `FK_transaction_employee` INT NULL DEFAULT 0,
+  `FK_supervisor_ID` INT NULL DEFAULT 0,
   `username` VARCHAR(32) NULL DEFAULT NULL,
   `first_name` VARCHAR(50) NULL DEFAULT NULL,
   `last_name` VARCHAR(50) NULL DEFAULT NULL,

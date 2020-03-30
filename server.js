@@ -18,14 +18,29 @@ const mysql = require("mysql");
 const connection = mysql.createConnection({
   host: "localhost",
   user: "root",
-  password: "password"
+  password: "password",
+  database: "store_database"
 });
 
-connection.connect(err => {
-  if (err) throw err;
-  console.log("Connected to Store Database");
+connection.connect((err)=>{
+  if(!err)
+  {
+      console.log("Connected to Store DB");
+  }
+  else{
+      console.log("Can't connect to Store DB");
+  }
 });
 
 app.use("/", indexRouter);
 
+app.post('/check', (req, res) =>{
+  let sql = 'SELECT * FROM customer';
+  connection.query(sql, (err, result) =>{
+    if(err) throw err;
+    res.send(sql);
+  })
+})
+
 app.listen(process.env.PORT || 3060);
+
