@@ -31,7 +31,7 @@ function getConnection() {
 //All the requests underneath
 const productRouter = express.Router()
 productRouter.get('/check/:id', (req, res) =>{
-    let sql = 'SELECT * FROM product WHERE product_name = ?';
+    let sql = 'SELECT * FROM product WHERE product_ID = ?';
     let pname = req.params.id;
     getConnection().query(sql, [pname], (err, result, fields) =>{
         if(err){
@@ -40,8 +40,13 @@ productRouter.get('/check/:id', (req, res) =>{
         res.end();
         return
         }
+        console.log(result);
         res.json(result);
     })
 })
+
+// getConnection().query('SELECT product_ID FROM product', (err, result) =>{
+//     console.log(result);
+// })
 
 module.exports = productRouter;
