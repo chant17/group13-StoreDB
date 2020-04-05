@@ -1,4 +1,4 @@
-use store_database;
+
 
 insert into payment_information (FK_customer_payment, checkNum, payment_date, amount) values ('00260974', '01-8850129', '2020-03-25 11:10:17', 102.32);
 insert into payment_information (FK_customer_payment, checkNum, payment_date, amount) values ('77985825', '01-9439776', '2020-03-28 03:27:55', 126.51);

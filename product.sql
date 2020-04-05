@@ -1,4 +1,4 @@
-use store_database;
+
 select * from product;
 insert into product (product_id, FK_product_dept_id, product_name, buy_price, vendor, quantity_inStock) values ('19537', 4, 'success', 97.81, 'Oba', 9);
 insert into product (product_id, FK_product_dept_id, product_name, buy_price, vendor, quantity_inStock) values ('85924', 1, 'orchestration', 96.99, 'Browsebug', 59);

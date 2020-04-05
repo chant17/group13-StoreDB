@@ -1,4 +1,4 @@
-use store_database;
+
 #select * from order_information;
 insert into order_information (transaction_id, FK_member_transaction, FK_payment_ID, order_date, expected_Delivery, shipped_Date, order_status, FK_cart_transaction) values ('152752', '20527236', '92-7079819', '2020-03-27 03:47:29', '2020-04-06 01:01:41', '2020-04-06 01:32:11', 1, 382);
 insert into order_information (transaction_id, FK_member_transaction, FK_payment_ID, order_date, expected_Delivery, shipped_Date, order_status, FK_cart_transaction) values ('480110', '00260974', '16-0307869', '2020-03-26 13:07:45', '2020-04-01 06:32:05', '2020-04-01 00:00:04', 1, 485);
