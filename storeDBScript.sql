@@ -86,6 +86,8 @@ supervisor_ID INTEGER,
 supervisor BOOL
 );
 
+ 
+
 
 -- ADDING FOREIGN KEYs/connections
 ALTER TABLE customer ADD FOREIGN KEY(FK_customer_cart) REFERENCES cart(cart_ID);

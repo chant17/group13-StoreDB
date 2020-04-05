@@ -1,5 +1,5 @@
 use store_database;
-
+insert into customer (membership_ID, first_name, last_name) VALUES (123, 'K', 'K');
 insert into customer (membership_ID, FK_customer_cart, username, first_name, last_name, email, phone_number, adress1, address2, city, state, zip_code, country, store_credit) values ('20527236', 382, 'sovill0', 'Stesha', 'Ovill', 'sovill0@msn.com', '619-304-5845', '3621 Bashford Hill', '2848 Shasta Place', 'Chula Vista', 'California', 91638, 'United States', 306.86);
 insert into customer (membership_ID, FK_customer_cart, username, first_name, last_name, email, phone_number, adress1, address2, city, state, zip_code, country, store_credit) values ('00260974', 485, 'eshear1', 'Everett', 'Shear', 'eshear1@springer.com', '850-989-8534', '75968 Dorton Alley', '5653 Hollow Ridge Pass', 'Tallahassee', 'Florida', 14553, 'United States', 178.75);
 insert into customer (membership_ID, FK_customer_cart, username, first_name, last_name, email, phone_number, adress1, address2, city, state, zip_code, country, store_credit) values ('24843276', 289, 'rwastell2', 'Rahel', 'Wastell', 'rwastell2@tumblr.com', '865-176-8667', '29889 Towne Alley', '29 Haas Plaza', 'Knoxville', 'Tennessee', 96369, 'United States', 21.54);
