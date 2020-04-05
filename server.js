@@ -28,6 +28,9 @@ app.use("/", customerRouter);
 app.use("/", productRouter);
 
 
+const PORT = process.env.PORT || 3060;
 
-app.listen(process.env.PORT || 3060);
+app.listen(PORT, () =>{
+  console.log("Server is up, running and listening on: " + PORT);
+});
 
