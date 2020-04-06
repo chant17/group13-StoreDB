@@ -1,6 +1,6 @@
 #CREATE DATABASE store_database;
 #USE store_database;
-SET FOREIGN_KEY_CHECKS = 0;
+-- SET FOREIGN_KEY_CHECKS = 0;
 -- DROP TABLE customer;
 -- DROP TABLE cart;
 -- DROP TABLE department;
@@ -113,6 +113,3 @@ ALTER TABLE employee ADD FOREIGN KEY(FK_member_employee) REFERENCES customer(mem
 ALTER TABLE employee ADD FOREIGN KEY(FK_transaction_employee) REFERENCES order_information(transaction_ID);
 ALTER TABLE cart ADD FOREIGN KEY(FK_product_cart) REFERENCES product(product_ID);
 -- ALTER TABLE employee ADD FOREIGN KEY(FK_supervisor_ID) REFERENCES employee(supervisor_ID);
-ALTER TABLE customer ADD password varchar(20) NOT NULL;
-
-

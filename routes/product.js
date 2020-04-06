@@ -29,9 +29,11 @@ function getConnection() {
 }
 
 //All the requests underneath
+
+//Get all product within the requested department
 const productRouter = express.Router()
 productRouter.get('/check/:id', (req, res) =>{
-    let sql = 'SELECT * FROM product WHERE product_ID = ?';
+    let sql = 'SELECT * FROM product WHERE FK_product_dept_id = 2';
     let pname = req.params.id;
     getConnection().query(sql, [pname], (err, result, fields) =>{
         if(err){
@@ -40,10 +42,19 @@ productRouter.get('/check/:id', (req, res) =>{
         res.end();
         return
         }
-        console.log(result);
         res.json(result);
     })
 })
+
+//Update the stock when user buys product
+productRouter.get('/update/:id', (req, res) =>{ //the id here would be the product_ID
+    let name = req.params.id + " " + "yote";
+    let k = "Yeet " + name;
+    res.render("layouts/layout.ejs", {username: k});
+});
+
+
+
 
 // getConnection().query('SELECT product_ID FROM product', (err, result) =>{
 //     console.log(result);
