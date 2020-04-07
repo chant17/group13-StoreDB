@@ -1,6 +1,6 @@
 #CREATE DATABASE store_database;
 #USE store_database;
-SET FOREIGN_KEY_CHECKS = 0;
+-- SET FOREIGN_KEY_CHECKS = 0;
 -- DROP TABLE customer;
 -- DROP TABLE cart;
 -- DROP TABLE department;
@@ -11,8 +11,8 @@ SET FOREIGN_KEY_CHECKS = 0;
 -- SET FOREIGN_KEY_CHECKS = 1;
 
 CREATE TABLE customer (
-membership_ID INT NOT NULL DEFAULT 0,
-FK_customer_cart INT NOT NULL DEFAULT 0,
+membership_ID INT NOT NULL AUTO_INCREMENT,
+-- FK_customer_cart INT NOT NULL DEFAULT 0,
 username VARCHAR(32),
 first_name VARCHAR(50),
 last_name VARCHAR(50),
@@ -53,7 +53,7 @@ PRIMARY KEY (product_ID)
 CREATE TABLE cart(
 cart_ID INT NOT NULL DEFAULT 0 ,
 FK_product_cart INT NOT NULL DEFAULT 0,
-transaction_ID INT NOT NULL,
+FK_MEMBERSHIP_ID INT DEFAULT 0,
 cart_description VARCHAR(255),
 total_price NUMERIC(19, 2),
 quantity INT NOT NULL,
@@ -101,7 +101,7 @@ PRIMARY KEY (employee_id, supervisor_ID)
 
 
 -- ADDING FOREIGN KEYs/connections
-ALTER TABLE customer ADD FOREIGN KEY(FK_customer_cart) REFERENCES cart(cart_ID);
+
 ALTER TABLE order_information ADD FOREIGN KEY(FK_member_transaction) REFERENCES customer(membership_ID);
 ALTER TABLE order_information ADD FOREIGN KEY(FK_cart_transaction) REFERENCES cart(cart_ID);
 ALTER TABLE payment_information ADD FOREIGN KEY (FK_customer_payment) REFERENCES customer (membership_ID);
@@ -114,5 +114,5 @@ ALTER TABLE employee ADD FOREIGN KEY(FK_transaction_employee) REFERENCES order_i
 ALTER TABLE cart ADD FOREIGN KEY(FK_product_cart) REFERENCES product(product_ID);
 -- ALTER TABLE employee ADD FOREIGN KEY(FK_supervisor_ID) REFERENCES employee(supervisor_ID);
 ALTER TABLE customer ADD password varchar(20) NOT NULL;
-
+ALTER TABLE cart ADD FOREIGN KEY(FK_MEMBERSHIP_ID) REFERENCES customer(MEMBERSHIP_ID);
 
