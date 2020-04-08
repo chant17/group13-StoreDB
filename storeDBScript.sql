@@ -28,6 +28,7 @@ store_credit NUMERIC(19, 2),
 PRIMARY KEY (membership_ID)
 );
 
+
 CREATE TABLE department(
 department_ID INTEGER NOT NULL DEFAULT 0,
 department_name VARCHAR(50),

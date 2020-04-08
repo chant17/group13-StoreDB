@@ -15,8 +15,21 @@ function getConnection() {
     return pool
 }
 
-departmentRouter.get('/', (req, res) => {
-    res.send('My name is Jeff');
+departmentRouter.get('/:id', (req, res) => {
+    let deptQuery = 'SELECT * from product where FK_product_dept_id = ?';
+    deptId = req.params.id;
+    getConnection().query(deptQuery, [deptId], (err, result, fields) => {
+        if (err) {
+            console.log("Failed to get the department " + err);
+            res.sendStatus(500);
+            return
+        }
+        let sendBack = JSON.stringify(result);
+        res.send(sendBack);
+        //res.render("shop/dept.ejs", sendBack);
+        //res.redirect("shop/dept.ejs");
+    })
+   
 })
 
 module.exports = departmentRouter;
