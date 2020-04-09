@@ -33,8 +33,9 @@ function getConnection() {
 }
 
 customerRouter.get("/signup", (req, res) => {
-  res.render('shop/dept');
+  res.render('user/signup');
 });
+
 
 //custom sql param request via the http param
 //handling post request
