@@ -24,8 +24,12 @@ departmentRouter.get('/:id', (req, res) => {
             res.sendStatus(500);
             return
         }
-        let sendBack = JSON.stringify(result);
-        res.send(sendBack);
+        var productGroup = [];
+        var counter = 3;
+        for(var i=0; i<result.lenght; i+= counter){
+            productGroup.push(result.slice(i, i + counter));
+        }
+        res.render('shop/dept', {data: result});
         //res.render("shop/dept.ejs", sendBack);
         //res.redirect("shop/dept.ejs");
     })

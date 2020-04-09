@@ -9,8 +9,28 @@
 </head>
 
 <body>
-    <%- include('header.ejs') %>
-    <%= data %>
+    <%- include('../partials/header') %>
+    <% var m = Math.ceil(data.length/3); %>
+    <% var loopCounter = 0; %>
+    <% for(var i=0; i < m; i++){ %>
+        <div class="card-deck mx-auto my-3">
+            <% for(var j=0; j<3; j++){ %>
+                <% if(loopCounter === data.length){ %>
+                    <div class="card border-0"></div> 
+                <% }  else{ %>
+                    <div class="card">
+                        <img class="card-img-top" src="..." alt="Card image cap">
+                        <div class="card-body">
+                        <h5 class="card-title"> <%= data[loopCounter].product_name %> </h5>
+                        <p class="card-text"> <%= loopCounter %> </p>
+                        <p class="card-text"><small class="text-muted"></small></p>
+                        </div>
+                    </div>
+                    <% loopCounter += 1; %>
+                <% } %>
+            <% } %>
+        </div>
+    <% } %>
 </body>
 
 </html>

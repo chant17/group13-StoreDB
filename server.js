@@ -16,24 +16,24 @@ const indexRouter = require("./routes/index.js");
 const customerRouter = require('./routes/customer.js');
 const productRouter = require('./routes/product.js');
 const departmentRouter = require('./routes/department.js');
-
+app.use("/", indexRouter);
+app.use("/customer", customerRouter);
+app.use("/product", productRouter);
+app.use("/department", departmentRouter);
 
 
 //////////////
 
 app.set("view engine", "ejs");
-app.set(["views", __dirname + "/views", __dirname + "/views/shop", __dirname + "/views/partials", __dirname + "/views/user"]);
-app.set("layout", "layouts/layout");
-app.set("layout", "shop/dept");
-app.use(expressLayouts);
-app.use(express.static("./views"));
+// app.set(["views", __dirname + "/views"])//, __dirname + "/views/shop", __dirname + "/views/partials", __dirname + "/views/user"]);
+// app.set("layout", "layouts/layout");
+//app.set("layout", "shop/dept");
+//app.use(expressLayouts);
+//app.use(express.static("./views"));
 app.use(morgan('short'));
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
-app.use("/", indexRouter);
-app.use("/customer", customerRouter);
-app.use("/product", productRouter);
-app.use("/department", departmentRouter);
+
 //app.use(cookieParser());
 //app.use(session({secret: 'secretkey', resave: false, saveUninitalized: false}))
 
