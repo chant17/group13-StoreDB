@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"> 
+    <link rel="stylesheet" href="admin.css">
+    <title>Admin Access</title>
+</head>
+
+<body>
+    <%- include('../partials/header') %>
+
+    <div class="social-box">
+        <div class="container">
+             <div class="row">
+                 
+                    <div class="col-lg-4 col-xs-12 text-center">
+                        <div class="box">
+                            <i class="fa fa-plus-circle fa-3x" aria-hidden="true"></i>
+                            <div class="box-title">
+                                <h3>Add Product</h3>
+                            </div>
+                            <div class="box-text">
+                                <span>Add new product to the inventory</span>
+                            </div>
+                            <div class="box-btn">
+                                <a href="/admin/add">Add Product</a>
+                            </div>
+                         </div>
+                    </div>	 
+                    
+                     <div class="col-lg-4 col-xs-12  text-center">
+                        <div class="box">
+                            <i class="fa fa-exchange fa-3x" aria-hidden="true"></i>
+                            <div class="box-title">
+                                <h3>Update Product</h3>
+                            </div>
+                            <div class="box-text">
+                                <span>Update the product information</span>
+                            </div>
+                            <div class="box-btn">
+                                <a href="#">Update Product</a>
+                            </div>
+                         </div>
+                    </div>	 
+                    
+                     <div class="col-lg-4 col-xs-12 text-center">
+                        <div class="box">
+                            <i class="fa fa-folder-open fa-3x" aria-hidden="true"></i>
+                            <div class="box-title">
+                                <h3>Product Report</h3>
+                            </div>
+                            <div class="box-text">
+                                <span>Provides Montly Sale Report/Other Reports</span>
+                            </div>
+                            <div class="box-btn">
+                                <a href="#">Show Report</a>
+                            </div>
+                         </div>
+                    </div>	 
+                    
+                    <div class="col-lg-4 col-xs-12 text-center">
+                        <div class="box">
+                            <i class="fa fa fa-users fa-3x" aria-hidden="true"></i>
+                            <div class="box-title">
+                                <h3>View Current Customers</h3>
+                            </div>
+                            <div class="box-text">
+                                <span>Display All the current customers with their information</span>
+                            </div>
+                            <div class="box-btn">
+                                <a href="#">Display Customers</a>
+                            </div>
+                         </div>
+                    </div>	 
+                    
+                     <div class="col-lg-4 col-xs-12 text-center">
+                        <div class="box">
+                            <i class="fa fa-minus-circle fa-3x" aria-hidden="true"></i>
+                            <div class="box-title">
+                                <h3>Delete Product</h3>
+                            </div>
+                            <div class="box-text">
+                                <span>Remove any specified product from display</span>
+                            </div>
+                            <div class="box-btn">
+                                <a href="#">Delete Product</a>
+                            </div>
+                         </div>
+                    </div>	 
+            </div>		
+        </div>
+    </div>
+</body>
