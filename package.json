@@ -19,7 +19,9 @@
   },
   "homepage": "https://github.com/chant17/group13-StoreDB#readme",
   "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.19.0",
+    "connect-flash": "^0.1.1",
     "cookie-parser": "^1.4.5",
     "csurf": "^1.11.0",
     "ejs": "^3.0.1",
@@ -30,7 +32,9 @@
     "mongodb": "^3.5.4",
     "mongoose": "^5.9.2",
     "morgan": "^1.10.0",
-    "mysql": "^2.18.1"
+    "mysql": "^2.18.1",
+    "passport": "^0.4.1",
+    "passport-local": "^1.0.0"
   },
   "devDependencies": {
     "dotenv": "^8.2.0",
