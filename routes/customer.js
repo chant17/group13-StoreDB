@@ -1,4 +1,4 @@
-//Handle all customer related routes
+// Handle all customer related routes
 const express = require("express");
 const customerRouter = express.Router();
 const mysql = require("mysql");
@@ -28,13 +28,21 @@ function getConnection() {
   return pool;
 }
 
-customerRouter.get("/signup", (req, res) => {
-  res.render('user/signup');
+customerRouter.get("/signup", csrfProtection, (req, res, next) => {
+  res.render('user/signup', { csrfToken: req.csrfToken() });
+});
+
+customerRouter.post('/signup', parseForm, csrfProtection, (req, res, next) => {
+  res.redirect('/');
+});
+
+customerRouter.get("/signin", (req, res) => {
+  res.render('user/signin');
 });
 
 
-//custom sql param request via the http param
-//handling post request
+// Custom sql param request via the http param
+// Handling post request
 customerRouter.post("/user_create", (req, res) => {
   console.log("trying to create a new user..");
   const fName = req.body.createFirstName;
