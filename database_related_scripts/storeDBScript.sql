@@ -11,8 +11,7 @@
 -- SET FOREIGN_KEY_CHECKS = 1;
 
 CREATE TABLE customer (
-membership_ID INT NOT NULL DEFAULT 0,
-FK_customer_cart INT NOT NULL DEFAULT 0,
+membership_ID INT NOT NULL AUTO_INCREMENT,
 username VARCHAR(32),
 first_name VARCHAR(50),
 last_name VARCHAR(50),
@@ -27,6 +26,7 @@ country VARCHAR(32),
 store_credit NUMERIC(19, 2),
 PRIMARY KEY (membership_ID)
 );
+
 
 CREATE TABLE department(
 department_ID INTEGER NOT NULL DEFAULT 0,
@@ -51,14 +51,17 @@ PRIMARY KEY (product_ID)
 );
 
 CREATE TABLE cart(
-cart_ID INT NOT NULL DEFAULT 0 ,
+FK_cart_ID INT NOT NULL,
 FK_product_cart INT NOT NULL DEFAULT 0,
-transaction_ID INT NOT NULL,
-cart_description VARCHAR(255),
-total_price NUMERIC(19, 2),
-quantity INT NOT NULL,
-PRIMARY KEY (cart_ID)
+price FLOAT DEFAULT 0,
+quantity INT NOT NULL
 );
+CREATE TABLE cust_cart(
+cartID integer not null auto_increment,
+FK_membershipID integer not null,
+primary key (cartID)
+);
+
 
 CREATE TABLE order_information(
 transaction_ID INT NOT NULL DEFAULT 0,
@@ -101,9 +104,9 @@ PRIMARY KEY (employee_id, supervisor_ID)
 
 
 -- ADDING FOREIGN KEYs/connections
-ALTER TABLE customer ADD FOREIGN KEY(FK_customer_cart) REFERENCES cart(cart_ID);
+
 ALTER TABLE order_information ADD FOREIGN KEY(FK_member_transaction) REFERENCES customer(membership_ID);
-ALTER TABLE order_information ADD FOREIGN KEY(FK_cart_transaction) REFERENCES cart(cart_ID);
+ALTER TABLE order_information ADD FOREIGN KEY(FK_cart_transaction) REFERENCES cust_cart(cartID);
 ALTER TABLE payment_information ADD FOREIGN KEY (FK_customer_payment) REFERENCES customer (membership_ID);
 #ALTER TABLE department ADD FK_MEMBERSHIP_ID INT NOT NULL;
 ALTER TABLE department ADD FOREIGN KEY(FK_MEMBERSHIP_ID) REFERENCES customer(membership_ID);
@@ -113,3 +116,16 @@ ALTER TABLE employee ADD FOREIGN KEY(FK_member_employee) REFERENCES customer(mem
 ALTER TABLE employee ADD FOREIGN KEY(FK_transaction_employee) REFERENCES order_information(transaction_ID);
 ALTER TABLE cart ADD FOREIGN KEY(FK_product_cart) REFERENCES product(product_ID);
 -- ALTER TABLE employee ADD FOREIGN KEY(FK_supervisor_ID) REFERENCES employee(supervisor_ID);
+ALTER TABLE customer ADD password varchar(20) NOT NULL;
+ALTER TABLE cart add product_name varchar(40);
+ALTER TABLE cart ADD FOREIGN KEY(FK_cart_ID) REFERENCES cust_cart(cartID);
+ALTER TABLE cust_cart ADD FOREIGN KEY(FK_membershipID) REFERENCES customer(MEMBERSHIP_ID);
+
+#TRIGGERS
+
+CREATE TRIGGER Cart_Creation
+AFTER INSERT ON customer
+FOR EACH ROW
+INSERT INTO cust_cart (FK_MEMBERSHIPID) SELECT MAX(membership_ID) FROM customer;
+
+

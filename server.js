@@ -16,10 +16,12 @@ const indexRouter = require("./routes/index.js");
 const customerRouter = require('./routes/customer.js');
 const productRouter = require('./routes/product.js');
 const departmentRouter = require('./routes/department.js');
+const cartRouter = require('./routes/cart.js');
 app.use("/", indexRouter);
 app.use("/customer", customerRouter);
 app.use("/product", productRouter);
 app.use("/department", departmentRouter);
+app.use("/cart", cartRouter);
 
 
 //////////////

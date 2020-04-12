@@ -24,7 +24,7 @@
                         <h5 class="card-title"> <%= data[loopCounter].product_name %> </h5>
                         <p class="card-text"> <%= loopCounter %> </p>
                         <p class="card-text"><small class="text-muted"></small></p>
-                        <button class="btn btn-info mr-2 my-2 my-sm-0" type="Order">Add to cart</button>
+                        <a href="/product/cart/<%= data[loopCounter].product_ID %>" <button class="btn btn-info mr-2 my-2 my-sm-0" type="Order">Add to cart</button></a>
                         </div>
                     </div>
                     <% loopCounter += 1; %>
@@ -32,6 +32,8 @@
             <% } %>
         </div>
     <% } %>
+
+      
 </body>
 
 </html>
