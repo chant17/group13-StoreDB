@@ -1,25 +1,21 @@
-//handle all customer related routes
+// Handle all customer related routes
 const express = require("express");
 const customerRouter = express.Router();
 const mysql = require("mysql");
-// const csrf = require('csurf');
-// var csrfProtection = csrf();
-// var cookieParser = require('cookie-parser');
-// customerRouter.use(cookieParser());
-// customerRouter.use(csrfProtection);
+var cookieParser = require('cookie-parser');
+var csrf = require('csurf');
+var bodyParser = require('body-parser');
+var session = require('express-session');
 
-//SQL Connection
-// const connection = mysql.createConnection({
-//   host: "localhost",
-//   user: "root",
-//   password: "password",
-//   database: "store_database"
-// });
 
-// connection.connect((err)=>{
-//   if(!err) console.log("Connected to Store DB - Customer Side");
-//   else console.log("Can't connect to Store DB - Customer Side");
-// });
+//Router Middleware
+var csrfProtection = csrf({ cookie: true });
+var parseForm = bodyParser.urlencoded({ extended: false });
+
+customerRouter.use(cookieParser());
+customerRouter.use(csrfProtection);
+
+//SQL Pool
 const pool = mysql.createPool({
     connectionLimit: 10,
     host: 'sulnwdk5uwjw1r2k.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
@@ -32,13 +28,21 @@ function getConnection() {
   return pool;
 }
 
-customerRouter.get("/signup", (req, res) => {
-  res.render('user/signup');
+customerRouter.get("/signup", csrfProtection, (req, res, next) => {
+  res.render('user/signup', { csrfToken: req.csrfToken() });
+});
+
+customerRouter.post('/signup', parseForm, csrfProtection, (req, res, next) => {
+  res.redirect('/');
+});
+
+customerRouter.get("/signin", (req, res) => {
+  res.render('user/signin');
 });
 
 
-//custom sql param request via the http param
-//handling post request
+// Custom sql param request via the http param
+// Handling post request
 customerRouter.post("/user_create", (req, res) => {
   console.log("trying to create a new user..");
   const fName = req.body.createFirstName;

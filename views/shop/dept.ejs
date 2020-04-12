@@ -2,10 +2,11 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-  <title>Store Database</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <title>Store Database</title>
 </head>
 
 <body>
@@ -13,27 +14,28 @@
     <% var m = Math.ceil(data.length/3); %>
     <% var loopCounter = 0; %>
     <% for(var i=0; i < m; i++){ %>
-        <div class="card-deck mx-auto my-3">
-            <% for(var j=0; j<3; j++){ %>
-                <% if(loopCounter === data.length){ %>
-                    <div class="card border-0"></div> 
-                <% }  else{ %>
-                    <div class="card">
-                        <img class="card-img-top" src="..." alt="Card image cap">
-                        <div class="card-body">
-                        <h5 class="card-title"> <%= data[loopCounter].product_name %> </h5>
-                        <p class="card-text"> <%= loopCounter %> </p>
-                        <p class="card-text"><small class="text-muted"></small></p>
-                        <a href="/product/cart/<%= data[loopCounter].product_ID %>" <button class="btn btn-info mr-2 my-2 my-sm-0" type="Order">Add to cart</button></a>
-                        </div>
-                    </div>
-                    <% loopCounter += 1; %>
-                <% } %>
-            <% } %>
+    <div class="card-deck mx-auto my-3">
+        <% for(var j=0; j<3; j++){ %>
+        <% if(loopCounter === data.length){ %>
+        <div class="card border-0"></div>
+        <% }  else{ %>
+        <div class="card">
+            <img class="card-img-top" src="..." alt="Card image cap">
+            <div class="card-body">
+                <h5 class="card-title"> <%= data[loopCounter].product_name %> </h5>
+                <p class="card-text"> <%= loopCounter %> </p>
+                <p class="card-text"><small class="text-muted"></small></p>
+                <a href="/product/cart/<%= data[loopCounter].product_ID %>" <button
+                    class="btn btn-info mr-2 my-2 my-sm-0" type="Order">Add to cart</button></a>
+            </div>
         </div>
+        <% loopCounter += 1; %>
+        <% } %>
+        <% } %>
+    </div>
     <% } %>
 
-      
+
 </body>
 
 </html>
