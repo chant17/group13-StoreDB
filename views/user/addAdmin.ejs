@@ -15,58 +15,81 @@
 <body>
     <%- include('../partials/header') %>
     <div class="container">
+        <h1 class="my-2"> Add a product to the inventory</h1>
         <div class="main">
             <div class="main-center">
-                <h5>Sign up once and watch any of our free demos.</h5>
-                <form class="" method="post" action="#">
+                <form action="/admin/addPost" method="POST">
 
                     <div class="form-group">
-                        <label for="name">Your Name</label>
+                        <label for="name">Product Name</label>
                         <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
                             <input type="text" class="form-control" name="name" id="name"
-                                placeholder="Enter your Name" />
+                                placeholder="Enter the product name" />
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="email">Your Email</label>
+                        <label for="prodDesc">Product Description</label>
                         <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
-                            <input type="text" class="form-control" name="email" placeholder="Enter your Email" />
+                            <input type="text" class="form-control" name="prodDesc"
+                                placeholder="Enter product description" />
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="username">Username</label>
+                        <label for="price">Price</label>
                         <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
-                            <input type="text" class="form-control" name="username" placeholder="Enter your Username" />
+                            <input type="text" class="form-control" name="price" placeholder="Enter product's price" />
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="password">Password</label>
+                        <label for="vendor">Product's vendor</label>
                         <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-                            <input type="password" class="form-control" name="password"
-                                placeholder="Enter your Password" />
+                            <input type="text" class="form-control" name="vendor"
+                                placeholder="Enter product's vendor" />
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="confirm">Confirm Password</label>
+                        <label for="quantity">Quantity</label>
                         <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-                            <input type="password" class="form-control" name="confirm"
-                                placeholder="Confirm your Password" />
+                            <input type="Number" class="form-control" name="quantity"
+                                placeholder="Enter product's quantity" />
                         </div>
                     </div>
-
-                    <button type="submit">SUBMIT</button>
+                    
+                    <div class="form-group">
+                        <label for="department">Product's department and Image Link</label>
+                        <div class="input-group">
+                            <select id="department" name="department" class="form-control">
+                                <option value=''>select a department</option>
+                                <option value='1'>Shirts</option>
+                                <option value='2'>Outerwear</option>
+                                <option value='3'>Pants</option>
+                                <option value='4'>Shoes</option>
+                                <option value='5'>Accessories</option>
+                        </div>
+                    
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="img">Product's image link</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" name="img"
+                                placeholder="Enter product's image link" />
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-outline-dark">SUBMIT</button>
 
                 </form>
             </div>
+            <% if(data = "Failed to insert!") {%>
+                <h5><span class="badge badge-danger my-2"><%= data %></span></h5>
+            <% } else{ %>
+                <h5><span class="badge badge-info my-2"><%= data %></span></h5>
+            <% } %>
             <!--main-center"-->
         </div>
         <!--main-->
