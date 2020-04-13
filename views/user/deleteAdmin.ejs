@@ -6,72 +6,57 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="/admin.css">
-    <title>Add Product</title>
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <title>Store Database</title>
 </head>
 
 <body>
-    <%- include('../partials/header') %>
-    <div class="container">
-        <div class="main">
-            <div class="main-center">
-                <h5>Sign up once and watch any of our free demos.</h5>
-                <form class="" method="post" action="#">
-
-                    <div class="form-group">
-                        <label for="name">Your Name</label>
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
-                            <input type="text" class="form-control" name="name" id="name"
-                                placeholder="Enter your Name" />
+    <%- include ('../partials/header.ejs') %>
+    <div class="container-fluid">
+        <h5 class="mx-3">Product Deletion</h5>
+        <table id="cart" class="table table-hover table-condensed">
+            <thead>
+                <tr>
+                    <th style="width:50%">Product</th>
+                    <th style="width:10%">ProductID</th>
+                    <th style="width:8%">Price</th>
+                    <th style="width:22%" class="text-center">Quantity</th>
+                    <th style="width:10%"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <% for(var i=0; i<data.length; i++){ %>
+                <tr>
+                    <td data-th="Product">
+                        <div class="row">
+                            <div class="col-sm-2 hidden-xs"><img src="http://placehold.it/100x100" alt="..."
+                                    class="img-responsive" /></div>
+                            <div class="col-sm-10 ">
+                                <h4> <%= data[i].product_name %></h4>
+                                <p> <%= data[i].product_desc %> </p>
+                            </div>
                         </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="email">Your Email</label>
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
-                            <input type="text" class="form-control" name="email" placeholder="Enter your Email" />
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="username">Username</label>
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
-                            <input type="text" class="form-control" name="username" placeholder="Enter your Username" />
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="password">Password</label>
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-                            <input type="password" class="form-control" name="password"
-                                placeholder="Enter your Password" />
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="confirm">Confirm Password</label>
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-                            <input type="password" class="form-control" name="confirm"
-                                placeholder="Confirm your Password" />
-                        </div>
-                    </div>
-
-                    <button type="submit">SUBMIT</button>
-
-                </form>
-            </div>
-            <!--main-center"-->
-        </div>
-        <!--main-->
+                    </td>
+                    <td data-th="ProductID"><%= data[i].product_ID %></td>
+                    <td data-th="Price">$<%= data[i].price %></td>   
+                    <td data-th="Quantity" class="text-center"><%= data[i].quantity_inStock %></td>
+                    <td class="actions" data-th="">
+                        <a href="/admin/delete/<%= data[i].product_ID %>" <button class="btn btn-danger btn-sm"><i
+                                class="fa fa-trash-o"></i></button>
+                    </td>
+                </tr>
+                <% } %>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td><a href="/admin" class="btn btn-warning"><i class="fa fa-angle-left"></i> Back to Admin Page</a>
+                    </td>
+                    <td colspan="2" class="hidden-xs"></td>
+                </tr>
+            </tfoot>
+        </table>
     </div>
-    <!--container-->
-</body>
+
+
 
 </html>

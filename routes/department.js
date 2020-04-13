@@ -24,11 +24,6 @@ departmentRouter.get('/:id', (req, res) => {
             res.sendStatus(500);
             return
         }
-        var productGroup = [];
-        var counter = 3;
-        for(var i=0; i<result.lenght; i+= counter){
-            productGroup.push(result.slice(i, i + counter));
-        }
         res.render('shop/dept', {data: result});
     })
    

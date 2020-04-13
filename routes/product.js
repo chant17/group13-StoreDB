@@ -47,6 +47,8 @@ productRouter.get('/cart/:id', (req, res) =>{
         
         prodName = result[0].product_name;
         prodPrice = result[0].buy_price;
+        imgLink = result[0].imgLink;
+        prodDesc = result[0].product_desc;
         checkQuery = "SELECT COUNT(*) as occurence FROM cart WHERE FK_cart_ID = 2 and FK_product_cart = ?";
         getConnection().query(checkQuery, [prodID], (err, result, fields) =>{
             if(err){
@@ -67,8 +69,8 @@ productRouter.get('/cart/:id', (req, res) =>{
                 });
             }
             else{ // if the product is not in the cart, create a new instance in cart table 
-                let sql2 = "INSERT INTO cart (FK_cart_ID, FK_product_cart, product_name, price, quantity) VALUES (2,?,?,?,1)";
-                getConnection().query(sql2, [prodID, prodName, prodPrice], ( err, result2, fields) =>{
+                let sql2 = "INSERT INTO cart (FK_cart_ID, FK_product_cart, product_name, price, quantity, product_desc, imgLink) VALUES (2,?,?,?,1,?,?)";
+                getConnection().query(sql2, [prodID, prodName, prodPrice, imgLink, prodDesc], ( err, result2, fields) =>{
                 if(err){
                     console.log("Failed to query " + err);
                     res.sendStatus(500) //send the error to the browser
