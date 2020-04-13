@@ -74,10 +74,9 @@ adminRouter.get("/report", (req, res, next) => {
 });
 adminRouter.get("/view", (req, res, next) => {
 
-    // getConnection().query("select * from customer", (err, result, fields) => {
-    //     res.render("user/admin");    
-    // });
-    res.render("user/viewAdmin");
+    getConnection().query("select * from customer", (err, result, fields) => {
+        res.render("user/viewAdmin", {data:result});    
+    });
 
 });
 

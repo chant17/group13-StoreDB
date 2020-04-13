@@ -18,7 +18,7 @@
         <table class="table">
           <thead>
             <tr>
-              <th>#</th>
+              <th>memID</th>
               <th>First Name</th>
               <th>Last Name</th>
               <th>Username</th>
@@ -29,15 +29,17 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>1</td>
-              <td>Mark</td>
-              <td>Tompson</td>
-              <td>the_mark7</td>
-              <td>chant@gmail.com</td>
-              <td>1.2</td>
-              <td><button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#exampleModal"> <i class="fa fa-trash"></i> </button></td> 
-            </tr>
+            <% for(var i=0;i<data.length;i++){ %>
+                <tr>
+                <td><%=data[i].membership_ID%></td>
+                <td><%=data[i].first_name%></td>
+                <td><%=data[i].last_name%></td>
+                <td><%=data[i].username%></td>
+                <td><%=data[i].email%></td>
+                <td><%=data[i].store_credit%></td>
+                <td><button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#exampleModal"> <i class="fa fa-trash"></i> </button></td> 
+                </tr>
+            <% } %>
           </tbody>
         </table>
     </div>
