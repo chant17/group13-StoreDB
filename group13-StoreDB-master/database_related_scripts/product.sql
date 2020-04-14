@@ -1,0 +1,33 @@
+
+-- select * from product;
+
+insert into product (product_id, FK_product_dept_id, product_name, buy_price, vendor, quantity_inStock) values ('33949', 1, 'T-shirt', 87.43, 'Gigabox', 18);
+insert into product (product_id, FK_product_dept_id, product_name, buy_price, vendor, quantity_inStock) values ('30343', 1, 'Casual Button-Down shirt', 30.65, 'Tanoodle', 58);
+insert into product (product_id, FK_product_dept_id, product_name, buy_price, vendor, quantity_inStock) values ('75278', 1, 'Polo shirt', 24.46, 'Katz', 43);
+insert into product (product_id, FK_product_dept_id, product_name, buy_price, vendor, quantity_inStock) values ('70466', 1, 'Dress shirt', 18.16, 'Photofeed', 46);
+insert into product (product_id, FK_product_dept_id, product_name, buy_price, vendor, quantity_inStock) values ('85924', 1, 'Henleys', 96.99, 'Browsebug', 59);
+insert into product (product_id, FK_product_dept_id, product_name, buy_price, vendor, quantity_inStock) values ('63283', 1, 'Tuxedo shirt', 54.53, 'Thoughtstorm', 55);
+insert into product (product_id, FK_product_dept_id, product_name, buy_price, vendor, quantity_inStock) values ('27108', 1, 'Tank tops', 94.09, 'Devify', 54);
+insert into product (product_id, FK_product_dept_id, product_name, buy_price, vendor, quantity_inStock) values ('66693', 2, 'Performance', 7.88, 'Jaxspan', 85);
+insert into product (product_id, FK_product_dept_id, product_name, buy_price, vendor, quantity_inStock) values ('29269', 2, 'Fleece', 1.96, 'Gigazoom', 31);
+insert into product (product_id, FK_product_dept_id, product_name, buy_price, vendor, quantity_inStock) values ('43194', 2, 'Lightweight Jackets', 36.57, 'Tambee', 3);
+insert into product (product_id, FK_product_dept_id, product_name, buy_price, vendor, quantity_inStock) values ('42325', 2, 'Trench & Rain', 89.1, 'Blogpad', 33);
+insert into product (product_id, FK_product_dept_id, product_name, buy_price, vendor, quantity_inStock) values ('61048', 2, 'Vests', 96.06, 'Agivu', 94);
+insert into product (product_id, FK_product_dept_id, product_name, buy_price, vendor, quantity_inStock) values ('44439', 3, 'Jeans', 83.76, 'Skiptube', 96);
+insert into product (product_id, FK_product_dept_id, product_name, buy_price, vendor, quantity_inStock) values ('58680', 3, 'Sweatpants', 73.55, 'Katz', 76);
+insert into product (product_id, FK_product_dept_id, product_name, buy_price, vendor, quantity_inStock) values ('62213', 3, 'Joggers', 55.5, 'Gigabox', 24);
+insert into product (product_id, FK_product_dept_id, product_name, buy_price, vendor, quantity_inStock) values ('75806', 3, 'Chino pants', 83.87, 'Kimia', 86);
+insert into product (product_id, FK_product_dept_id, product_name, buy_price, vendor, quantity_inStock) values ('27662', 3, 'Cargo pants', 28.62, 'Gigaclub', 76);
+insert into product (product_id, FK_product_dept_id, product_name, buy_price, vendor, quantity_inStock) values ('21126', 3, 'Baggy pants', 39.62, 'Fiveclub', 50);
+insert into product (product_id, FK_product_dept_id, product_name, buy_price, vendor, quantity_inStock) values ('54181', 3, 'Utility', 30.7, 'Riffwire', 3);
+insert into product (product_id, FK_product_dept_id, product_name, buy_price, vendor, quantity_inStock) values ('33311', 3, 'Track pants', 24.26, 'Riffwire', 9);
+insert into product (product_id, FK_product_dept_id, product_name, buy_price, vendor, quantity_inStock) values ('80893', 3, 'Side stripe pants', 59.19, 'Plambee', 82);
+insert into product (product_id, FK_product_dept_id, product_name, buy_price, vendor, quantity_inStock) values ('19537', 4, 'Athletic', 97.81, 'Oba', 9);
+insert into product (product_id, FK_product_dept_id, product_name, buy_price, vendor, quantity_inStock) values ('79995', 4, 'Boots', 91.04, 'Fadeo', 71);
+insert into product (product_id, FK_product_dept_id, product_name, buy_price, vendor, quantity_inStock) values ('09458', 4, 'Fashion Sneakers', 28.67, 'Edgeblab', 92);
+insert into product (product_id, FK_product_dept_id, product_name, buy_price, vendor, quantity_inStock) values ('74397', 4, 'Loafers & Slip-Ons', 24.49, 'Livetube', 36);
+insert into product (product_id, FK_product_dept_id, product_name, buy_price, vendor, quantity_inStock) values ('76986', 4, 'Outdoor', 36.6, 'Trilia', 49);
+insert into product (product_id, FK_product_dept_id, product_name, buy_price, vendor, quantity_inStock) values ('06704', 5, 'Belt', 11.61, 'Meevee', 15);
+insert into product (product_id, FK_product_dept_id, product_name, buy_price, vendor, quantity_inStock) values ('90145', 5, 'Hats & Caps', 67.8, 'Yotz', 67);
+insert into product (product_id, FK_product_dept_id, product_name, buy_price, vendor, quantity_inStock) values ('38192', 5, 'Scarves', 98.25, 'Thoughtstorm', 42);
+insert into product (product_id, FK_product_dept_id, product_name, buy_price, vendor, quantity_inStock) values ('58089', 5, 'Sunglasses & Eyewear Accessories', 5.18, 'Browsebug', 18);
