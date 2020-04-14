@@ -61,9 +61,45 @@ adminRouter.get("/update", (req, res, next) => {
     // getConnection().query("select * from customer", (err, result, fields) => {
     //     res.render("user/admin");    
     // });
-    res.render("user/updateAdmin");
+    res.render("user/updateAdmin", {data: res});
 
 });
+
+adminRouter.post("/updatePostDept", parseForm, (req, res, next) => {
+    let id = req.body.department;
+    getConnection().query("select * from product where FK_product_dept_id = ?",[id], (err, result, fields) => {
+        res.render("user/updateAdmin", {data: result});    
+    });
+
+});
+adminRouter.post("/updatePostProd", parseForm, (req, res, next) => {
+    let id = req.body.product;
+    getConnection().query("select * from product where product_ID = ?",[id], (err, result, fields) => {
+        res.render("user/updateAdminProduct", {data: result});    
+    });
+
+});
+
+adminRouter.post("/modifyProd", parseForm, (req, res, next) => {
+    
+    let id = req.body.prodID;
+    let name = req.body.name;
+    let desc = req.body.prodDesc;
+    let price = req.body.price;
+    let vendor = req.body.vendor;
+    let imgLink = req.body.img;
+    let quantity = req.body.quantity;
+    console.log(id);
+    let sql = "UPDATE product SET product_name = ?, product_desc = ?, vendor = ?, buy_price = ?, quantity_inStock = ?, imgLink = ? WHERE product_ID = ?";
+    getConnection().query(sql,[name, desc, vendor, price, quantity, imgLink, id], (err, result, fields) => {
+        if(err){
+            console.log(err);
+        }
+        res.redirect("/admin/update");    
+    });
+
+});
+
 adminRouter.get("/report", (req, res, next) => {
 
     // getConnection().query("select * from customer", (err, result, fields) => {
@@ -77,6 +113,21 @@ adminRouter.get("/view", (req, res, next) => {
     getConnection().query("select * from customer", (err, result, fields) => {
         res.render("user/viewAdmin", {data:result});    
     });
+
+});
+
+adminRouter.get("/deleteUser/:id", (req, res, next) => {
+    let id = req.params.id;
+    let sql = "DELETE FROM customer WHERE membership_ID = ?"
+    getConnection().query(sql, [id], (err, result, fields) => {
+        if (err) {
+            console.log("Failed to query " + err);
+            res.sendStatus(500) //send the error to the browser
+            res.end();
+            return
+        }
+    }); 
+    res.redirect('/admin/view');
 
 });
 

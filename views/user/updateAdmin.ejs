@@ -14,64 +14,32 @@
 
 <body>
     <%- include('../partials/header') %>
+    
     <div class="container">
-        <div class="main">
-            <div class="main-center">
-                <h5>Sign up once and watch any of our free demos.</h5>
-                <form class="" method="post" action="#">
+        <p><h5>Select a department</h5></p>
+        <form action="/admin/updatePostDept" method="POST">
+            <select class="form-control" id="department" name="department">
+                <option value=''>select a department</option>
+                <option value='1'>Shirts</option>
+                <option value='2'>Outerwear</option>
+                <option value='3'>Pants</option>
+                <option value='4'>Shoes</option>
+                <option value='5'>Accessories</option>
+            </select>
+            <button type="submit" class="btn btn-outline-dark my-2">Submit</button>
+        </form>
+        <p><h5>Select A product</h5></p>
+        <form action="/admin/updatePostProd" method="POST">
+            <select class="form-control" id="product" name="product">
+                <option value=''>select a product</option>
+                <% for(var i=0; i<data.length;i++){ %>
+                    <option value="<%=data[i].product_ID%>"><%= data[i].product_name %></option>
+                <% } %>
+            </select>
+            <button type="submit" class="btn btn-outline-dark my-2">Submit</button>
+        </form>
 
-                    <div class="form-group">
-                        <label for="name">Your Name</label>
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
-                            <input type="text" class="form-control" name="name" id="name"
-                                placeholder="Enter your Name" />
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="email">Your Email</label>
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
-                            <input type="text" class="form-control" name="email" placeholder="Enter your Email" />
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="username">Username</label>
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
-                            <input type="text" class="form-control" name="username" placeholder="Enter your Username" />
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="password">Password</label>
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-                            <input type="password" class="form-control" name="password"
-                                placeholder="Enter your Password" />
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="confirm">Confirm Password</label>
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-                            <input type="password" class="form-control" name="confirm"
-                                placeholder="Confirm your Password" />
-                        </div>
-                    </div>
-
-                    <button type="submit">SUBMIT</button>
-
-                </form>
-            </div>
-            <!--main-center"-->
-        </div>
-        <!--main-->
     </div>
-    <!--container-->
 </body>
 
 </html>
