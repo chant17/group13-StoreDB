@@ -7,7 +7,6 @@
 -- DROP TABLE order_information;
 -- DROP TABLE payment_information;
 -- DROP TABLE product;
--- DROP TABLE employee;
 -- SET FOREIGN_KEY_CHECKS = 1;
 
 CREATE TABLE customer (
@@ -83,49 +82,34 @@ amount NUMERIC(19,2),
 PRIMARY KEY (checkNum)
 );
 
-CREATE TABLE employee(
-employee_ID INTEGER DEFAULT 0,
-FK_member_employee INTEGER DEFAULT 0,
-FK_office_employee INTEGER DEFAULT 0,
-FK_transaction_employee INTEGER DEFAULT 0,
-FK_supervisor_ID INTEGER DEFAULT 0,
-username VARCHAR(32),
-first_name VARCHAR(50),
-last_name VARCHAR(50),
-email VARCHAR(50),
-phone_number VARCHAR(50),
-office_address VARCHAR(50),
-supervisor_ID INTEGER DEFAULT 0,
-supervisor BOOL,
-PRIMARY KEY (employee_id, supervisor_ID)
-);
-
- 
-
-
 -- ADDING FOREIGN KEYs/connections
 
 ALTER TABLE order_information ADD FOREIGN KEY(FK_member_transaction) REFERENCES customer(membership_ID);
+ALTER TABLE order_information ADD CONSTRAINT orderConst1 FOREIGN KEY(FK_member_transaction) REFERENCES customer(membership_ID) on update cascade on delete cascade;
 ALTER TABLE order_information ADD FOREIGN KEY(FK_cart_transaction) REFERENCES cust_cart(cartID);
+ALTER TABLE order_information ADD CONSTRAINT orderConst2 FOREIGN KEY(FK_cart_transaction) REFERENCES cust_cart(cartID) on update cascade on delete cascade;
 ALTER TABLE payment_information ADD FOREIGN KEY (FK_customer_payment) REFERENCES customer (membership_ID);
-#ALTER TABLE department ADD FK_MEMBERSHIP_ID INT NOT NULL;
+ALTER TABLE payment_information ADD CONSTRAINT paymentConst FOREIGN KEY (FK_customer_payment) REFERENCES customer (membership_ID) on update cascade on delete cascade;
 ALTER TABLE department ADD FOREIGN KEY(FK_MEMBERSHIP_ID) REFERENCES customer(membership_ID);
+ALTER TABLE department ADD constraint deptConst1 FOREIGN KEY(FK_MEMBERSHIP_ID) REFERENCES customer(membership_ID) on update cascade on delete cascade;
 ALTER TABLE product ADD FOREIGN KEY(FK_product_dept_id) REFERENCES department(department_ID);
+ALTER TABLE product ADD constraint prodConst FOREIGN KEY(FK_product_dept_id) REFERENCES department(department_ID) on update cascade on delete cascade;
 ALTER TABLE order_information ADD FOREIGN KEY(FK_payment_id) REFERENCES payment_information(checkNum);
-ALTER TABLE employee ADD FOREIGN KEY(FK_member_employee) REFERENCES customer(membership_ID);
-ALTER TABLE employee ADD FOREIGN KEY(FK_transaction_employee) REFERENCES order_information(transaction_ID);
+ALTER TABLE order_information ADD CONSTRAINT orderConst3 FOREIGN KEY(FK_payment_id) REFERENCES payment_information(checkNum) on update cascade on delete cascade;
 ALTER TABLE cart ADD FOREIGN KEY(FK_product_cart) REFERENCES product(product_ID);
--- ALTER TABLE employee ADD FOREIGN KEY(FK_supervisor_ID) REFERENCES employee(supervisor_ID);
-ALTER TABLE customer ADD password varchar(20) NOT NULL;
+ALTER TABLE cart ADD constraint cartConst FOREIGN KEY(FK_product_cart) REFERENCES product(product_ID) on update cascade on delete cascade;
+ALTER TABLE customer ADD password varchar(20) NOT NULL; 
 ALTER TABLE cart add product_name varchar(40);
+ALTER TABLE product add imgLink varchar(255);
+ALTER TABLE cart add product_desc varchar(255);
+ALTER TABLE cart add imgLink varchar(255);
 ALTER TABLE cart ADD FOREIGN KEY(FK_cart_ID) REFERENCES cust_cart(cartID);
+ALTER TABLE cart ADD constraint cartConst2 FOREIGN KEY(FK_cart_ID) REFERENCES cust_cart(cartID) on update cascade on delete cascade;
 ALTER TABLE cust_cart ADD FOREIGN KEY(FK_membershipID) REFERENCES customer(MEMBERSHIP_ID);
-
+ALTER TABLE cust_cart ADD constraint custCartConst FOREIGN KEY(FK_membershipID) REFERENCES customer(MEMBERSHIP_ID) on update cascade on delete cascade;
 #TRIGGERS
-
 CREATE TRIGGER Cart_Creation
 AFTER INSERT ON customer
 FOR EACH ROW
 INSERT INTO cust_cart (FK_MEMBERSHIPID) SELECT MAX(membership_ID) FROM customer;
-
 
