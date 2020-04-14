@@ -4,6 +4,7 @@ const app = express();
 const expressLayouts = require("express-ejs-layouts");
 const morgan = require('morgan'); //used to track/read the request(s) that we get
 const bodyParser = require('body-parser'); //used to handle http request from the browser
+const db = require
 app.set('view engine', 'ejs');
 app.use(express.static(__dirname + "/public"));
 //ROUTES VARIABLE
