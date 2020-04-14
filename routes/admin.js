@@ -89,7 +89,6 @@ adminRouter.post("/modifyProd", parseForm, (req, res, next) => {
     let vendor = req.body.vendor;
     let imgLink = req.body.img;
     let quantity = req.body.quantity;
-    console.log(id);
     let sql = "UPDATE product SET product_name = ?, product_desc = ?, vendor = ?, buy_price = ?, quantity_inStock = ?, imgLink = ? WHERE product_ID = ?";
     getConnection().query(sql,[name, desc, vendor, price, quantity, imgLink, id], (err, result, fields) => {
         if(err){
