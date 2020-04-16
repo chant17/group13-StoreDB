@@ -25,3 +25,11 @@ insert into payment_information (FK_customer_payment, checkNum, payment_date, am
 insert into payment_information (FK_customer_payment, checkNum, payment_date, amount) values ('25351124', '92-7079819', '2020-03-28 13:11:28', 3.94);
 insert into payment_information (FK_customer_payment, checkNum, payment_date, amount) values ('31226829', '97-2155385', '2020-03-29 14:46:56', 227.28);
 insert into payment_information (FK_customer_payment, checkNum, payment_date, amount) values ('54196908', '99-5710531', '2020-03-25 19:45:19', 34.71);
+
+
+-- report 1
+select payment_date, sum(amount) as total from payment_information where payment_date > '2020-02-25 19:45:19' and payment_date < '2020-05-25 19:45:19' group by payment_date;
+
+-- report 2
+
+select product_name, buy_price from product where FK_product_dept_id = 2 and buy_price = (select min(buy_price) from product where FK_product_dept_id = 2) or buy_price = (select max(buy_price) from product where FK_product_dept_id = 2) order by buy_price;

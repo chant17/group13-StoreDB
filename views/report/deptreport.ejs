@@ -17,30 +17,33 @@
     <%- include('../partials/header') %>
     <div class="container my-2">
         <div class="row col-md-12 col-md-offset-2 custyle">
+            <h3>Low On Stock Product (less than 15) </h3>
             <table class="table table-striped custab">
                 <thead>
                     <tr>
-                        <th>ID</th>
-                        <th>Title</th>
-                        <th>Parent ID</th>
-                        <th>Parent ID</th>
-                        <th>Parent ID</th>
-
+                        <th>Product ID</th>
+                        <th>Proudct Name</th>
+                        <th>Buy Price</th>
+                        <th>Vendor</th>
+                        <th>Quantity</th>
                     </tr>
                 </thead>
-                <tr>
-                    <td>1</td>
-                    <td>News</td>
-                    <td>News Cate</td>
-                    <td>News Cate</td>
-                    <td>News Cate</td>
+                <% for(var i=0; i<stock.length; i++){ %>
+                    <tr>
+                        <td> <%= stock[i].product_id %> </td>
+                        <td> <%= stock[i].product_name %> </td>
+                        <td> <%= stock[i].buy_price %> </td>
+                        <td> <%= stock[i].vendor %> </td>
+                        <td> <%= stock[i].quantity_inStock %> </td>
 
-                </tr>
+                    </tr>
+                <% } %>
 
             </table>
         </div>
-        <h4 class="my-2">Most purchased product: </h4>
-        <h4 class="my-4 mb-2">Total Product Purchased: </h4>
+        <h4 class="my-2">Average Product Cost: <a class="text-success"><%= average.toFixed(2) %></a> </h4>
+        <h4 class="my-4 mb-2">Cheapest Product: <a class="text-success"><%= minimumProd %></a> at the price of <a class="text-success"> <%= minimum %> </a></h4>
+        <h4 class="my-4 mb-2">Most Expensive Product: <a class="text-success"><%= maximumProd %></a> at the price of <a class="text-success"><%= maximum %></a> </h4>
 
         <tfoot>
             <tr>

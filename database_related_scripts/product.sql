@@ -1,5 +1,5 @@
 
-select * from cart;
+select * from payment_information;
 
 insert into product (product_id, FK_product_dept_id, product_name, buy_price, vendor, quantity_inStock) values ('19537', 4, 'success', 97.81, 'Oba', 9);
 insert into product (product_id, FK_product_dept_id, product_name, buy_price, vendor, quantity_inStock) values ('85924', 1, 'orchestration', 96.99, 'Browsebug', 59);
@@ -31,3 +31,4 @@ insert into product (product_id, FK_product_dept_id, product_name, buy_price, ve
 insert into product (product_id, FK_product_dept_id, product_name, buy_price, vendor, quantity_inStock) values ('61048', 2, 'Enhanced', 96.06, 'Agivu', 94);
 insert into product (product_id, FK_product_dept_id, product_name, buy_price, vendor, quantity_inStock) values ('27108', 1, 'task-force', 94.09, 'Devify', 54);
 insert into product (product_id, FK_product_dept_id, product_name, buy_price, vendor, quantity_inStock) values ('76986', 4, 'solution', 36.6, 'Trilia', 49);
+

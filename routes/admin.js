@@ -105,7 +105,6 @@ adminRouter.get("/report", (req, res, next) => {
 });
 
 adminRouter.post("/saleReport", parseForm, (req, res, field) => {
-    let data = "111";
     let sd = changeDate(req.body.startDate);
     let ed = changeDate(req.body.endDate);
     let sql = "select SUM(amount)as total from payment_information where date(payment_date) >= ? and date(payment_date) <= ?;";
@@ -135,13 +134,29 @@ adminRouter.post("/saleReport", parseForm, (req, res, field) => {
 });
 
 adminRouter.post("/deptReport", parseForm, (req, res, next) => {
-    // let sd = changeDate(req.body.startDate);
-    // let ed = changeDate(req.body.endDate);
-    // let sql = "select * from payment_information where date(payment_date) > ? and date(payment_date) < ?";
-    // db.query(sql, [sd, ed], (err, result, fields) => {
-    //     res.render('user/reportAdmin', {data: result});
-    // });
-    res.json(1);
+    let dept = req.body.deptSelector;
+    db.query("select * from product where FK_product_dept_id = ? and quantity_inStock < 15", [dept], (err, result, fields) => {
+        let lowStock = result;
+        db.query("select AVG(buy_price) as avgPrice from product where FK_product_dept_id = ?", [dept], (err, result, fields) => {
+            let avg = result[0].avgPrice;
+            let sql= "select product_name, buy_price from product where FK_product_dept_id = ? and buy_price = (select min(buy_price) from product where FK_product_dept_id = ?) or buy_price = (select max(buy_price) from product where FK_product_dept_id = ?) order by buy_price;"
+            db.query(sql, [dept, dept, dept], (err, result, fields) => {
+                let min = result[0].buy_price;
+                let minProd = result[0].product_name;
+                let max = result[1].buy_price;
+                let maxProd = result[1].product_name;
+                res.render('report/deptreport', {
+                    stock: lowStock,
+                    average: avg,
+                    minimumProd: minProd,
+                    maximumProd: maxProd,
+                    minimum: min,
+                    maximum: max
+                });
+            });
+        });
+    });
+
 
 });
 
