@@ -103,6 +103,48 @@ adminRouter.get("/report", (req, res, next) => {
     res.render("user/reportAdmin");
 
 });
+
+adminRouter.post("/saleReport", parseForm, (req, res, field) => {
+    let data = "111";
+    let sd = changeDate(req.body.startDate);
+    let ed = changeDate(req.body.endDate);
+    let sql = "select SUM(amount)as total from payment_information where date(payment_date) >= ? and date(payment_date) <= ?;";
+    db.query(sql, [sd, ed], (err, result, fields) => {
+        let k = result[0].total;
+        let subsql = 'select date(payment_date) as date, sum(amount) as total from payment_information where payment_date >= ? and payment_date <= ? group by payment_date';
+        db.query(subsql, [sd, ed], (err, result, fields) => {
+            var maxNum = 0;
+            let dateTime;
+            for (var i = 0; i < result.length; i++) {
+                if (result[i].total > maxNum) {
+                    maxNum = result[i].total;
+                    dateTime = result[i].date;
+                }
+            }
+            res.render("report/saleReport", {
+                dataUno: result,
+                dataDos: maxNum,
+                dataDosDos: dateTime,
+                dataTres: k
+            });
+
+        });
+    });
+
+
+});
+
+adminRouter.post("/deptReport", parseForm, (req, res, next) => {
+    // let sd = changeDate(req.body.startDate);
+    // let ed = changeDate(req.body.endDate);
+    // let sql = "select * from payment_information where date(payment_date) > ? and date(payment_date) < ?";
+    // db.query(sql, [sd, ed], (err, result, fields) => {
+    //     res.render('user/reportAdmin', {data: result});
+    // });
+    res.json(1);
+
+});
+
 adminRouter.get("/view", (req, res, next) => {
 
     db.query("select * from customer", (err, result, fields) => {
@@ -168,5 +210,21 @@ function makeid(length) {
     }
     return result;
 }
+
+function changeDate(data) {
+    var result = '';
+    result += data.slice(6, 10) + '-' + data.slice(0, 2) + '-' + data.slice(3, 5); // + " 00:00:00";
+    return result;
+}
+
+function sliceDate(data) {
+    var result = '';
+    result += data.slice(4, 15);
+    return result;
+}
+
+// let j = [];
+// j.push({"data": "ok"});
+// console.log(j[0].data);
 
 module.exports = adminRouter;

@@ -9,69 +9,97 @@
 
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/admin.css">
+    <link href="https://www.eyecon.ro/bootstrap-datepicker/css/datepicker.css" rel="stylesheet">
     <title>Add Product</title>
 </head>
 
 <body>
     <%- include('../partials/header') %>
+
     <div class="container">
-        <div class="main">
-            <div class="main-center">
-                <h5>Sign up once and watch any of our free demos.</h5>
-                <form class="" method="post" action="#">
-
-                    <div class="form-group">
-                        <label for="name">Your Name</label>
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
-                            <input type="text" class="form-control" name="name" id="name"
-                                placeholder="Enter your Name" />
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="email">Your Email</label>
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
-                            <input type="text" class="form-control" name="email" placeholder="Enter your Email" />
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="username">Username</label>
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
-                            <input type="text" class="form-control" name="username" placeholder="Enter your Username" />
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="password">Password</label>
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-                            <input type="password" class="form-control" name="password"
-                                placeholder="Enter your Password" />
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="confirm">Confirm Password</label>
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-                            <input type="password" class="form-control" name="confirm"
-                                placeholder="Confirm your Password" />
-                        </div>
-                    </div>
-
-                    <button type="submit">SUBMIT</button>
-
-                </form>
+        <h2 class="my-4">Sales Report</h2>
+        <form action="saleReport" method="POST">
+            <div class="well">
+                <div class="input-append date">
+                    <label for="startDate">Start Date</label>
+                    <input type="text" class="span2" name="startDate" value="" id="dpd1">
+                    <span class="add-on"><i class="icon-calendar"></i></span>
+                </div>
             </div>
-            <!--main-center"-->
-        </div>
-        <!--main-->
+            <div class="well">
+                <div class="input-append date">
+                    <label for="endDate">End Date</label>
+                    <input type="text" class="span2" name="endDate" value="" id="dpd2">
+                    <span class="add-on"><i class="icon-calendar"></i></span>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-outline-dark mb-2">Submit</button>
+        </form>
+
+        <h2 class="my-4">Department Report</h2>
+        <form action="deptReport" method="POST">
+            <select class="form-control" id="product" name="deptSelector">
+                <option value=''>select a department</option>
+                <option value="1">Shirts</option>
+                <option value="2">Outerwear</option>
+                <option value="3">Pants</option>
+                <option value="4">Shoes</option>
+                <option value="5">Accessories</option>
+            </select>
+            <button type="submit" class="btn btn-outline-dark my-4">Submit</button>
+        </form>
+
     </div>
-    <!--container-->
+
+
+
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://www.eyecon.ro/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+    <script>
+        $(function () {
+            window.prettyPrint && prettyPrint();
+            $('#dp1').datepicker({
+                format: 'dd-mm-yyyy'
+            });
+            var nowTemp = new Date();
+            var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
+            var checkin = $('#dpd1').datepicker({
+                onRender: function (date) {
+                    return date.valueOf() < now.valueOf();
+                }
+            }).on('changeDate', function (ev) {
+                if (ev.date.valueOf() > checkout.date.valueOf()) {
+                    var newDate = new Date(ev.date)
+                    newDate.setDate(newDate.getDate() + 1);
+                    checkout.setValue(newDate);
+                }
+            })
+        });
+    </script>
+    <script>
+        $(function () {
+            window.prettyPrint && prettyPrint();
+            $('#dp1').datepicker({
+                format: 'dd-mm-yyyy'
+            });
+            var nowTemp = new Date();
+            var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
+            var checkin = $('#dpd2').datepicker({
+                onRender: function (date) {
+                    return date.valueOf() < now.valueOf();
+                }
+            }).on('changeDate', function (ev) {
+                if (ev.date.valueOf() > checkout.date.valueOf()) {
+                    var newDate = new Date(ev.date)
+                    newDate.setDate(newDate.getDate() + 1);
+                    checkout.setValue(newDate);
+                }
+            })
+        });
+    </script>
+
 </body>
 
 </html>

@@ -13,28 +13,34 @@
     <%- include('../partials/header') %>
     <% var m = Math.ceil(data.length/3); %>
     <% var loopCounter = 0; %>
-    <% for(var i=0; i < m; i++){ %>
-    <div class="card-deck mx-auto my-3">
-        <% for(var j=0; j<3; j++){ %>
-        <% if(loopCounter === data.length){ %>
-        <div class="card border-0"></div>
-        <% }  else{ %>
-        <div class="card">
-            <img class="card-img-thumbnail" src="<%= data[loopCounter].imgLink %>" height=200 width=200>
-            <div class="card-body">
-                <h5 class="card-title"> <%= data[loopCounter].product_name %> </h5>
-                <p class="card-text"> <%= loopCounter %> </p>
-                <p class="card-text"><small class="text-muted"></small></p>
-                <a href="/product/cart/<%= data[loopCounter].product_ID %>" <button
-                    class="btn btn-info mr-2 my-2 my-sm-0" type="Order">Add to cart</button></a>
+    <div class="container">
+        <% for(var i=0; i < m; i++){ %>
+        <div class="card-deck mx-auto my-3">
+            <% for(var j=0; j<3; j++){ %>
+            <% if(loopCounter === data.length){ %>
+            <div class="card border-0"></div>
+            <% }  else{ %>
+            <div class="card">
+                <img class="card-img-thumbnail" src="<%= data[loopCounter].imgLink %>" height=200 width=200>
+                <div class="card-body">
+                    <h5 class="card-title"> <%= data[loopCounter].product_name %> </h5>
+                    <p class="card-text"> <%= data[loopCounter].product_desc %> </p>
+                    <p class="card-text"><small class="text-muted"></small></p>
+                    
+                    <div class="d-flex">
+                        <div class="p-2"><a href="/product/cart/<%= data[loopCounter].product_ID %>" <button
+                            class="btn btn-info mr-2 my-2 my-sm-0" type="Order">Add to cart</button></a></div>
+                        <div class="ml-auto p-2">$<%= data[loopCounter].buy_price %> </div>
+                      </div>
+                    
+                </div>
             </div>
+            <% loopCounter += 1; %>
+            <% } %>
+            <% } %>
         </div>
-        <% loopCounter += 1; %>
-        <% } %>
         <% } %>
     </div>
-    <% } %>
-
 
 </body>
 
