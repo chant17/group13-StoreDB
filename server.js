@@ -4,14 +4,25 @@ const app = express();
 const expressLayouts = require("express-ejs-layouts");
 const morgan = require('morgan'); //used to track/read the request(s) that we get
 const bodyParser = require('body-parser'); //used to handle http request from the browser
-const db = require
+const mysql = require('mysql');
 app.set('view engine', 'ejs');
-app.use(express.static(__dirname + "/public"));
+var path = require('path');
+app.use(express.static(path.join(__dirname + "/public")));
 //ROUTES VARIABLE
 const session = require('express-session');
 var cookieParser = require('cookie-parser');
 var passport = require('passport');
 var flash = require('connect-flash');
+
+// Middleware and stuff
+app.use(morgan('dev'));
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+app.use(cookieParser());
+app.use(session({ secret: 'secretKey', resave: false, saveUninitialized: false }));
+app.use(flash());
+app.use(passport.initialize());
+app.use(passport.session());
 
 //Routes Variables
 const indexRouter = require("./routes/index.js");
@@ -26,19 +37,6 @@ app.use("/department", departmentRouter);
 app.use("/cart", cartRouter);
 app.use("/admin", adminRouter);
 app.use("/", indexRouter);
-
-
-//////////////
-app.use(morgan('short'));
-app.use(bodyParser.urlencoded({
-  extended: false
-}));
-app.use(bodyParser.json());
-app.use(cookieParser());
-app.use(session({ secret: 'secretKey', resave: false, saveUninitialized: false }));
-app.use(flash());
-app.use(passport.initialize());
-app.use(passport.session());
 
 //----------------------
 const PORT = process.env.PORT || 3060;
