@@ -139,7 +139,7 @@ adminRouter.post("/deptReport", parseForm, (req, res, next) => {
         let lowStock = result;
         db.query("select AVG(buy_price) as avgPrice from product where FK_product_dept_id = ?", [dept], (err, result, fields) => {
             let avg = result[0].avgPrice;
-            let sql= "select product_name, buy_price from product where FK_product_dept_id = ? and buy_price = (select min(buy_price) from product where FK_product_dept_id = ?) or buy_price = (select max(buy_price) from product where FK_product_dept_id = ?) order by buy_price;"
+            let sql = "select product_name, buy_price from product where FK_product_dept_id = ? and buy_price = (select min(buy_price) from product where FK_product_dept_id = ?) or buy_price = (select max(buy_price) from product where FK_product_dept_id = ?) order by buy_price;"
             db.query(sql, [dept, dept, dept], (err, result, fields) => {
                 let min = result[0].buy_price;
                 let minProd = result[0].product_name;

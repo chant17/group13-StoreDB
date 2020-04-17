@@ -25,3 +25,7 @@ insert into order_information (transaction_id, FK_member_transaction, FK_payment
 insert into order_information (transaction_id, FK_member_transaction, FK_payment_ID, order_date, expected_Delivery, shipped_Date, order_status, FK_cart_transaction) values ('234210', '54196908', '29-2998715', '2020-03-25 16:35:57', '2020-04-02 01:14:18', '2020-04-02 22:32:23', 1, 207);
 insert into order_information (transaction_id, FK_member_transaction, FK_payment_ID, order_date, expected_Delivery, shipped_Date, order_status, FK_cart_transaction) values ('980534', '94099264', '33-9873167', '2020-03-28 11:53:07', '2020-03-31 16:40:00', '2020-04-01 08:49:55', 0, 728);
 insert into order_information (transaction_id, FK_member_transaction, FK_payment_ID, order_date, expected_Delivery, shipped_Date, order_status, FK_cart_transaction) values ('568913', '34358272', '05-9122194', '2020-03-28 17:04:33', '2020-04-06 21:11:16', '2020-04-06 16:08:21', 0, 952);
+
+-- testing
+select k.cartID from customer c, cust_cart k where c.membership_ID = k.FK_membershipID and c.membership_ID = 7;
+select sum(price) from cart where FK_cart_ID = 6;

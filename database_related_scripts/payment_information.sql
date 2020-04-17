@@ -26,7 +26,11 @@ insert into payment_information (FK_customer_payment, checkNum, payment_date, am
 insert into payment_information (FK_customer_payment, checkNum, payment_date, amount) values ('31226829', '97-2155385', '2020-03-29 14:46:56', 227.28);
 insert into payment_information (FK_customer_payment, checkNum, payment_date, amount) values ('54196908', '99-5710531', '2020-03-25 19:45:19', 34.71);
 
-
+-- Testing
+select sum(price) from cart where FK_cart_ID = 6;
+UPDATE customer SET store_credit = 103 where membership_id = 7;
+select * from customer where membership_id = 7;
+select * from cart;
 -- report 1
 select payment_date, sum(amount) as total from payment_information where payment_date > '2020-02-25 19:45:19' and payment_date < '2020-05-25 19:45:19' group by payment_date;
 

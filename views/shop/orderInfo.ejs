@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <title>Store Database</title>
+</head>
+
+<body>
+    <%- include ('../partials/header.ejs') %>
+    <%  var today = new Date();
+        var shipDate = new Date();
+        var sDate = "";
+        var dd = String(today.getDate()).padStart(2, '0');
+        var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+        var yyyy = today.getFullYear();
+        shipDate.setDate(today.getDate() + 5);
+        var dds = String(shipDate.getDate()).padStart(2, '0');
+        var mms = String(shipDate.getMonth() + 1).padStart(2, '0');
+        var yyyys = String(shipDate.getFullYear()).padStart(2, '0');
+        today = yyyy + '/' + mm + '/' + dd; 
+        sDate = yyyys + '/' + mms + '/' + dds; %>
+
+    <div class="container">
+        <h2 class="h4 text-center d-block font-weight-bold text-danger text-uppercase my-4">Order Placed!</h2>
+        <h3 class="h6 text-center d-block text-uppercase font-weight-bold">Thank YOU!</h3>
+        <span class="bottom-line d-block mx-auto mt-3 mb-4"></span>
+        <div class="row my-2 mx-auto">
+            <div class="col-3 text-right border-right border-dark">
+                ORDER ID
+            </div>
+            <div class="col-9 pl-4" name="transaction_ID">
+                <%= orderID %>
+            </div>
+        </div>
+        <div class="row my-2 mx-auto">
+            <div class="col-3 text-right border-right border-dark">
+                TOTAL PRICE
+            </div>
+            <div class="col-9 pl-4" name="price">
+                <%= total %>
+            </div>
+        </div>
+        <div class="row my-2 mx-auto">
+            <div class="col-3 text-right border-right border-dark">
+                ORDER DATE
+            </div>
+            <div class="col-9 pl-4">
+                <%= today %>
+            </div>
+        </div>
+        <div class="row my-2 mx-auto">
+            <div class="col-3 text-right border-right border-dark">
+                EXPECTED DELIVERY BY 
+            </div>
+            <div class="col-9 pl-4">
+                <%= sDate %>
+            </div>
+        </div>
+
+        <div class="row my-2 mx-auto">
+            <div class="col-3 text-right border-right border-dark">
+                ORDER STATUS
+            </div>
+            <div class="col-9 pl-4">
+                In Progress
+            </div>
+        </div>
+
+        <tfoot>
+            <tr>
+                <td><a href="/" class="btn btn-warning my-4"><i class="fa fa-angle-left"></i> Continue Shopping</a></td>
+
+            </tr>
+        </tfoot>
+    </div>
+
+
+</body>
+
+</html>

@@ -31,6 +31,8 @@ const productRouter = require('./routes/product.js');
 const departmentRouter = require('./routes/department.js');
 const cartRouter = require('./routes/cart.js');
 const adminRouter = require('./routes/admin.js');
+const orderRouter = require('./routes/order.js');
+app.use("/order", orderRouter);
 app.use("/customer", customerRouter);
 app.use("/product", productRouter);
 app.use("/department", departmentRouter);
