@@ -10,10 +10,15 @@ const pool = mysql.createPool({
     dateStrings: 'date'
 })
 
-function getConnection() {
+function getConnection(error) {
+    if(!!error) {
+    console.log('Error');
+    } else {
+    console.log('Connected to heroku database');
+    }
     return pool
 }
 const dbConnect = getConnection();
 
 
-module.exports = pool;
+module.exports = dbConnect;

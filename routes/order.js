@@ -35,7 +35,7 @@ orderRouter.get("/orderinfo/:id", (req, res) => {
             if (err) console.log(err);
             let price = result[0].price;
             console.log(price);
-            let updateCredit = "UPDATE customer SET store_credit = store_credit + ? where membership_id = ?;"
+            let updateCredit = "UPDATE customer SET store_credit = IFNULL(store_credit, 0) + ? where membership_id = ?;"
             db.query(updateCredit, [price,id], (err, result, fields) => {
                 if (err) console.log(err);
             });
