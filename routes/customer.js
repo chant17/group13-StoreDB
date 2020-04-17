@@ -47,7 +47,6 @@ customerRouter.post('/signup', parseForm, async (req, res, next) => {
   let zip = req.body.zip;
   let country = req.body.country;
   let errors = [];
-  let hashedPassword = '';
   let sql = 'INSERT INTO customer (membership_ID)'
   console.log(req.body.firstname);
   console.log(req.body.lastname);
@@ -68,7 +67,6 @@ customerRouter.post('/signup', parseForm, async (req, res, next) => {
     errors.push({
       msg: 'Please fill in all required fields'
     });
-    console.log(errors.length);
   }
 
   // Check passwords match
@@ -83,7 +81,6 @@ customerRouter.post('/signup', parseForm, async (req, res, next) => {
     errors.push({
       msg: 'Password should be at least 6 characters'
     });
-    console.log(errors.length);
   }
 
   if (errors.length > 0) {
@@ -111,21 +108,24 @@ customerRouter.post('/signup', parseForm, async (req, res, next) => {
           data: 'Failed to create new user'
         })
       } else {
-        let insertUser = 'INSERT INTO customer (membership_ID, username, first_name, last_name, email, phone_number, address1, address2, city, state, zip_code, country, password) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)';
+        let insertUser = 'INSERT INTO customer (membership_ID, username, first_name, last_name, email, phone_number, address1, address2, city, state, zip_code, country) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)';
         let userID = makeid(5);
-        bcrypt.genSalt(10, (err, salt) => {
-          bcrypt.hash(password, salt, (err, hash) => {
-            if (err) {
-              throw err;
-            } else {
-
-            }
-          })
-        })
-        db.query(insertUser, [userID, username, firstname, lastname, email, phone, address1, address2, city, state, zip, country, hashedPassword], (err, result, fields) => {
+        db.query(insertUser, [userID, username, firstname, lastname, email, phone, address1, address2, city, state, zip, country], (err, result, fields) => {
           if (err) {
             console.log('Failed to insert new customer', err);
           } else {
+            async function hashPassword(password) {
+              const saltRounds = 10;
+              const hashedPassword = await new Promise((resolve, reject) => {
+                bcrypt.hash(password, saltRounds, (err, hash) => {
+                  if(err) reject(err);
+                  resolve(hash);
+                });
+              });
+              db.query("UPDATE `woivccvvos2pfj3e`.`customer` SET `password` = '"+hashedPassword+"' WHERE (`membership_ID` = '"+userID+"');");
+              console.log('Did the Update query run?');
+            };
+            hashPassword(password);
             console.log('New customer added to db');
             res.render('user/signin');
           }
