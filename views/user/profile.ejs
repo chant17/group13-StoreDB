@@ -4,10 +4,95 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   <title>Store Database</title>
 </head>
 
 <body>
-    
+  <%- include('../partials/header') %>
+
+  <div class="container">
+    <h3 class="my-5">Welcome <%= data[0].first_name %>! Modify your information as needed </h3>
+    <form action="profilePost" method="POST">
+      <div class="form-row">
+        <div class="col-md-4 mb-3">
+          <label for="validationServer013">First name</label>
+          <input type="text" class="form-control" id="fname" name="fname" placeholder="First name"
+            value="<%= data[0].first_name %>" required>
+        </div>
+        <div class="col-md-4 mb-3">
+          <label for="lname">Last name</label>
+          <input type="text" class="form-control" id="lname" name="lname" placeholder="Last name"
+            value="<%= data[0].last_name %>" required>
+        </div>
+        <div class="col-md-4 mb-3">
+          <label for="uname">Username</label>
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="inputGroupPrepend33">@</span>
+            </div>
+            <input type="text" class="form-control" id="uname" name="uname" value="<%= data[0].username %>"
+              placeholder="Username" aria-describedby="inputGroupPrepend33" required>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="col-md-4 mb-3">
+          <label for="phoneNumber">Phone Number (XXX-XXX-XXXX) </label>
+          <input type="text" class="form-control" id="phoneNumber" name="phoneNumber"
+            value="<%= data[0].phone_number %>" placeholder="Phone Number" required>
+        </div>
+        <div class="col-md-6 mb-3">
+          <label for="email">Email</label>
+          <input type="text" class="form-control" id="email" name="email" value="<%= data[0].email %>"
+            placeholder="Email" required>
+        </div>
+        <div class="col-md-2 mb-3">
+          <label for="credit">Store Credit</label>
+          <input type="text" class="form-control" id="credit" name="credit" value="<%= data[0].store_credit %>"
+            disabled>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="col-md-6 mb-3">
+          <label for="city">City</label>
+          <input type="text" class="form-control" id="city" name="city" value="<%= data[0].city %>" placeholder="City"
+            required>
+        </div>
+        <div class="col-md-3 mb-3">
+          <label for="state">State</label>
+          <input type="text" class="form-control" id="state" name="state" value="<%= data[0].state %>"
+            placeholder="State" required>
+        </div>
+        <div class="col-md-3 mb-3">
+          <label for="zip">Zip Code</label>
+          <input type="number" class="form-control" id="zip" name="zip" value="<%= data[0].zip_code %>"
+            placeholder="Zip" required>
+
+        </div>
+
+        <a class="my-2" href="changePassword/<%= data[0].membership_ID %>">Change Password</a>
+      </div>
+
+      <button class="btn btn-primary my-2" type="submit">Submit Change</button>
+    </form>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-validator/0.5.3/js/bootstrapValidator.min.js" />
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+    integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous">
+  </script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+    integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous">
+  </script>
 </body>
+
+</html>
