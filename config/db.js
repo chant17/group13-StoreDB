@@ -2,7 +2,7 @@ const express = require("express");
 const mysql = require("mysql");
 
 const pool = mysql.createPool({
-    connectionLimit: 100,
+    connectionLimit: 10,
     host: 'sulnwdk5uwjw1r2k.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
     user: 'dw4h1mb7skn1bu0n',
     password: 'z31mjqf5qy22tlbm',
@@ -10,15 +10,4 @@ const pool = mysql.createPool({
     dateStrings: 'date'
 })
 
-function getConnection(error) {
-    if(!!error) {
-    console.log('Error');
-    } else {
-    console.log('Connected to heroku database');
-    }
-    return pool
-}
-const dbConnect = getConnection();
-
-
-module.exports = dbConnect;
+module.exports = pool;

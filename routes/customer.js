@@ -118,11 +118,11 @@ customerRouter.post('/signup', parseForm, async (req, res, next) => {
               const saltRounds = 10;
               const hashedPassword = await new Promise((resolve, reject) => {
                 bcrypt.hash(password, saltRounds, (err, hash) => {
-                  if(err) reject(err);
+                  if (err) reject(err);
                   resolve(hash);
                 });
               });
-              db.query("UPDATE `woivccvvos2pfj3e`.`customer` SET `password` = '"+hashedPassword+"' WHERE (`membership_ID` = '"+userID+"');");
+              db.query("UPDATE `woivccvvos2pfj3e`.`customer` SET `password` = '" + hashedPassword + "' WHERE (`membership_ID` = '" + userID + "');");
               console.log('Did the Update query run?');
             };
             hashPassword(password);
@@ -210,4 +210,27 @@ customerRouter.post("/submitPassword/:id", parseForm, (req, res, next) => {
 
 
 });
+
+customerRouter.get("/vieworder/:id", (req, res, next) => {
+  let id = req.params.id;
+  let sql = "select * from order_information where FK_member_transaction = ? ";
+  db.query("select amount from payment_information where FK_customer_payment = ?", [id], (err, result, fields) => {
+    if (err) console.log(err);
+    let price = [];
+    //let price = result[0].amount;
+    for(var i=0; i<result.length; i++){
+      price.push(result[i].amount);
+    }
+    db.query(sql, [id], (err, result, fields) => {
+      if (err) console.log(err);
+      res.render('shop/orderProfile', {
+        data: result,
+        orderPrice: price
+      });
+    });
+  });
+
+
+});
+
 module.exports = customerRouter;
