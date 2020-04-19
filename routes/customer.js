@@ -127,18 +127,38 @@ customerRouter.get("/signin", (req, res) => {
 customerRouter.post("/signin", parseForm, (req, res) => {
   var username = req.body.username;
   var password = req.body.password;
+  console.log(username);
+  console.log(password);
+  function fetchPassword(username, callback) {
+    db.query('SELECT password FROM woivccvvos2pfj3e.customer WHERE username = ?', username, function(err, rows) {
+      if (err) {
+        callback(err, null);
+      } else {
+        callback(null, rows[0].password);
+      }
+    });
+  }
+  var storedPassword;
+  fetchPassword(username, function(err, content) {
+    if (err) {
+      res.send(err);
+    } else {
+      storedPassword = content;
+      console.log(storedPassword);
+      res.send('Password from db is: ' + storedPassword);
+    }
+  })
   if (username && password) { 
-    db.query("SELECT password FROM customer WHERE username = '?';", [username], (err, result, fields) => {
+    db.query("SELECT password FROM woivccvvos2pfj3e.customer WHERE username = '?';", [username], (err, result, fields) => {
       console.log(password);
-      console.log(result);
-      bcrypt.compare(req.body.password, password, (err, resultPassword) => {
-        if (resultPassword != true) {
+      bcrypt.compare(req.body.password, storedPassword, (err, resultPassword) => {
+        if (resultPassword == true) {
             console.log('Successful Login - Session created.')
             req.session.loggedin = true;
             req.session.username = username;
-            res.redirect('/');
+            //res.redirect('/register');
         } else {
-            res.send('Incorrect username and/or password');
+            //res.send('Incorrect username and/or password');
           } 
       });
     })
