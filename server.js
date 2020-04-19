@@ -41,7 +41,7 @@ app.use("/admin", adminRouter);
 app.use("/", indexRouter);
 
 //----------------------
-const PORT = process.env.PORT || 3060;
+const PORT = process.env.PORT || 3666;
 
 app.listen(PORT, () => {
   console.log("Server is up, running and listening on: " + PORT);

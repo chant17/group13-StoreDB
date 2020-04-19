@@ -9,13 +9,13 @@ var connection = mysql.createConnection({
   database: 'woivccvvos2pfj3e',
 });
 
-connection.connect((error) => {
-  if(!!error) {
-    console.log('Error');
-  } else {
-    console.log('Connected to heroku database');
-  }
-});
+// connection.connect((error) => {
+//   if(!!error) {
+//     console.log('Error');
+//   } else {
+//     console.log('Connected to heroku database');
+//   }
+// });
 
 router.get("/", (req, res) => {
   res.render("layouts/layout");

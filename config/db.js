@@ -10,10 +10,4 @@ const pool = mysql.createPool({
     dateStrings: 'date'
 })
 
-function getConnection() {
-    return pool
-}
-const dbConnect = getConnection();
-
-
 module.exports = pool;

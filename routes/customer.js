@@ -47,20 +47,6 @@ customerRouter.post('/signup', parseForm, async (req, res, next) => {
   let zip = req.body.zip;
   let country = req.body.country;
   let errors = [];
-  let sql = 'INSERT INTO customer (membership_ID)'
-  console.log(req.body.firstname);
-  console.log(req.body.lastname);
-  console.log(req.body.email);
-  console.log(req.body.username);
-  console.log(req.body.password);
-  console.log(req.body.password2);
-  console.log(req.body.phone);
-  console.log(req.body.address1);
-  console.log(req.body.address2);
-  console.log(req.body.city);
-  console.log(req.body.state);
-  console.log(req.body.zip);
-  console.log(req.body.country);
 
   // Check Required Fields
   if (!firstname || !lastname || !email || !username || !password || !password2 || !phone || !address1 || !city || !state || !zip || !country) {
@@ -123,10 +109,9 @@ customerRouter.post('/signup', parseForm, async (req, res, next) => {
                 });
               });
               db.query("UPDATE `woivccvvos2pfj3e`.`customer` SET `password` = '"+hashedPassword+"' WHERE (`membership_ID` = '"+userID+"');");
-              console.log('Did the Update query run?');
             };
             hashPassword(password);
-            console.log('New customer added to db');
+            console.log('New customer registered and added to database');
             res.render('user/signin');
           }
         })
