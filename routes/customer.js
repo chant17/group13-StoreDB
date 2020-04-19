@@ -7,6 +7,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
 var bcrypt = require('bcrypt');
+var passport = require('passport');
 
 //Router Middleware
 var parseForm = bodyParser.urlencoded({
@@ -15,7 +16,6 @@ var parseForm = bodyParser.urlencoded({
 customerRouter.use(cookieParser());
 
 //SQL Pool
-
 customerRouter.get("/signup", (req, res, next) => {
   res.render('user/signup', {});
 });
@@ -124,6 +124,28 @@ customerRouter.get("/signin", (req, res) => {
   res.render('user/signin');
 });
 
+customerRouter.post("/signin", parseForm, (req, res) => {
+  var username = req.body.username;
+  var password = req.body.password;
+  if (username && password) { 
+    db.query("SELECT password FROM customer WHERE username = '?';", [username], (err, result, fields) => {
+      console.log(password);
+      console.log(result);
+      bcrypt.compare(req.body.password, password, (err, resultPassword) => {
+        if (resultPassword != true) {
+            console.log('Successful Login - Session created.')
+            req.session.loggedin = true;
+            req.session.username = username;
+            res.redirect('/');
+        } else {
+            res.send('Incorrect username and/or password');
+          } 
+      });
+    })
+  }
+});
+
+
 customerRouter.get("/profile", (req, res) => {
   let sql = "select * from customer where membership_ID = 7";
   db.query(sql, (err, result, fields) => {
@@ -192,8 +214,6 @@ customerRouter.post("/submitPassword/:id", parseForm, (req, res, next) => {
     }
 
   });
-
-
 });
 
 customerRouter.get("/vieworder/:id", (req, res, next) => {
@@ -217,5 +237,19 @@ customerRouter.get("/vieworder/:id", (req, res, next) => {
 
 
 });
+
+function checkAuthenticated(req, res, next) {
+  if(req.isAuthenticated()) {
+    return next();
+  }
+  res.redirect('/login');
+}
+
+function checkNotAuthenticated(req, res, next) {
+  if(req.isAuthenticated()) {
+    res.redirect('/')
+  }
+  next()
+}
 
 module.exports = customerRouter;
