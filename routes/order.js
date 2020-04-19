@@ -35,6 +35,7 @@ orderRouter.get("/orderinfo/:id/:total", parseForm, (req, res) => {
         let cartID = result[0].cartID;
         console.log(cartID);
 
+
         let updateCredit = "UPDATE customer SET store_credit = IFNULL(store_credit, 0) + ? where membership_id = ?;"
         db.query(updateCredit, [price, id], (err, result, fields) => {
             if (err) console.log("here3" + err);
@@ -49,7 +50,7 @@ orderRouter.get("/orderinfo/:id/:total", parseForm, (req, res) => {
         console.log(transID + " " + paymentID + " " + price + " " + cartID);
         let sql5 = "select FK_product_cart from cart where FK_cart_ID = ?;";
         db.query(sql5, [cartID], (err, result, fields) => {
-            if (err) console.log("here 7 "+ err);
+            if (err) console.log("here 7 " + err);
             if (result.length == 0) res.redirect("/");
             for (var i = 0; i < result.length; i++) {
                 let prodId = result[i].FK_product_cart;
@@ -62,13 +63,21 @@ orderRouter.get("/orderinfo/:id/:total", parseForm, (req, res) => {
             db.query(sql4, [cartID], (err, result, fields) => {
                 if (err) console.log("HERE 6" + err);
             });
+            //CHECK THIS SHIT OUT TOMORROW
+            let checkCredit = "SELECT store_credit from customer where membership_ID = ?";
+            db.query(checkCredit, [id], (err, result, fields) => {
+                if (err) console.log("check credit error " + err);
+                if (result[0].store_credit > 1000) {
+                    price = (price / 2).toFixed(2);
+                }
+                res.render('shop/orderInfo', {
+                    status: 0,
+                    total: price,
+                    orderID: transID
+                });
+            });
         });
 
-    });
-    res.render('shop/orderInfo', {
-        status: 0,
-        total: price,
-        orderID: transID
     });
 });
 
