@@ -133,6 +133,7 @@ adminRouter.post("/saleReport", parseForm, (req, res, field) => {
 
 });
 
+
 adminRouter.post("/deptReport", parseForm, (req, res, next) => {
     let dept = req.body.deptSelector;
     db.query("select * from product where FK_product_dept_id = ? and quantity_inStock < 15", [dept], (err, result, fields) => {

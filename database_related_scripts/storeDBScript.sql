@@ -107,9 +107,26 @@ ALTER TABLE cart ADD FOREIGN KEY(FK_cart_ID) REFERENCES cust_cart(cartID);
 ALTER TABLE cart ADD constraint cartConst2 FOREIGN KEY(FK_cart_ID) REFERENCES cust_cart(cartID) on update cascade on delete cascade;
 ALTER TABLE cust_cart ADD FOREIGN KEY(FK_membershipID) REFERENCES customer(MEMBERSHIP_ID);
 ALTER TABLE cust_cart ADD constraint custCartConst FOREIGN KEY(FK_membershipID) REFERENCES customer(MEMBERSHIP_ID) on update cascade on delete cascade;
+
 #TRIGGERS
 CREATE TRIGGER Cart_Creation
 AFTER INSERT ON customer
 FOR EACH ROW
 INSERT INTO cust_cart (FK_MEMBERSHIPID) SELECT MAX(membership_ID) FROM customer;
 
+
+
+-- TEST QUERIES
+select * from cart;
+select * from order_information;  -- where FK_member_transaction = 7;
+select * from payment_information;
+select * from product;
+select * from product where product_ID = 27108; -- 52
+select * from product where product_ID = 19537; -- 8
+delete from payment_information where FK_customer_payment = 7;
+select * from payment_information where FK_customer_payment = 7;
+select * from product where product_ID = 33311;
+
+select FK_product_cart from cart where FK_cart_ID = 6;
+update product set quantity_inStock = quantity_inStock - (select quantity from cart where FK_product_cart = 27108) where product_id = 27108;
+update product set quantity_inStock = 25 where product_ID = 27108;
