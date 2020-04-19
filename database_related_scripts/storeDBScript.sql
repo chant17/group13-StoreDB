@@ -114,12 +114,34 @@ AFTER INSERT ON customer
 FOR EACH ROW
 INSERT INTO cust_cart (FK_MEMBERSHIPID) SELECT MAX(membership_ID) FROM customer;
 
+CREATE TRIGGER restock_inventory
+BEFORE INSERT on order_information
+FOR EACH ROW
+UPDATE product SET quantity_inStock = FLOOR(RAND()*(50-10+1)+10) WHERE quantity_inStock < 10;
+
+drop trigger discount;
+
+DELIMITER //
+CREATE TRIGGER discount
+BEFORE INSERT ON payment_information FOR EACH ROW
+BEGIN
+	IF (SELECT store_credit from customer WHERE membership_ID = NEW.FK_customer_payment) > 1000 
+    THEN SET NEW.amount = NEW.amount / 2;
+    UPDATE customer set store_credit = store_credit - 1000 where membership_ID = NEW.FK_customer_payment;
+	END IF;
+END //
+DELIMITER ;
+
+
+
+ALTER TABLE customer ADD isAdmin boolean default 0;
+
 
 
 -- TEST QUERIES
 select * from cart;
 select * from order_information;  -- where FK_member_transaction = 7;
-select * from payment_information;
+select * from customer;
 select * from product;
 select * from product where product_ID = 27108; -- 52
 select * from product where product_ID = 19537; -- 8
