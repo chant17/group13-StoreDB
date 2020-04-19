@@ -7,6 +7,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
 var bcrypt = require('bcrypt');
+var passport = require('passport');
 
 //Router Middleware
 var parseForm = bodyParser.urlencoded({
@@ -15,7 +16,6 @@ var parseForm = bodyParser.urlencoded({
 customerRouter.use(cookieParser());
 
 //SQL Pool
-
 customerRouter.get("/signup", (req, res, next) => {
   res.render('user/signup', {});
 });
@@ -47,20 +47,6 @@ customerRouter.post('/signup', parseForm, async (req, res, next) => {
   let zip = req.body.zip;
   let country = req.body.country;
   let errors = [];
-  let sql = 'INSERT INTO customer (membership_ID)'
-  console.log(req.body.firstname);
-  console.log(req.body.lastname);
-  console.log(req.body.email);
-  console.log(req.body.username);
-  console.log(req.body.password);
-  console.log(req.body.password2);
-  console.log(req.body.phone);
-  console.log(req.body.address1);
-  console.log(req.body.address2);
-  console.log(req.body.city);
-  console.log(req.body.state);
-  console.log(req.body.zip);
-  console.log(req.body.country);
 
   // Check Required Fields
   if (!firstname || !lastname || !email || !username || !password || !password2 || !phone || !address1 || !city || !state || !zip || !country) {
@@ -122,11 +108,10 @@ customerRouter.post('/signup', parseForm, async (req, res, next) => {
                   resolve(hash);
                 });
               });
-              db.query("UPDATE `woivccvvos2pfj3e`.`customer` SET `password` = '" + hashedPassword + "' WHERE (`membership_ID` = '" + userID + "');");
-              console.log('Did the Update query run?');
+              db.query("UPDATE `woivccvvos2pfj3e`.`customer` SET `password` = '"+hashedPassword+"' WHERE (`membership_ID` = '"+userID+"');");
             };
             hashPassword(password);
-            console.log('New customer added to db');
+            console.log('New customer registered and added to database');
             res.render('user/signin');
           }
         })
@@ -138,6 +123,48 @@ customerRouter.post('/signup', parseForm, async (req, res, next) => {
 customerRouter.get("/signin", (req, res) => {
   res.render('user/signin');
 });
+
+customerRouter.post("/signin", parseForm, (req, res) => {
+  var username = req.body.username;
+  var password = req.body.password;
+  console.log(username);
+  console.log(password);
+  function fetchPassword(username, callback) {
+    db.query('SELECT password FROM woivccvvos2pfj3e.customer WHERE username = ?', username, function(err, rows) {
+      if (err) {
+        callback(err, null);
+      } else {
+        callback(null, rows[0].password);
+      }
+    });
+  }
+  var storedPassword;
+  fetchPassword(username, function(err, content) {
+    if (err) {
+      res.send(err);
+    } else {
+      storedPassword = content;
+      console.log(storedPassword);
+      res.send('Password from db is: ' + storedPassword);
+    }
+  })
+  if (username && password) { 
+    db.query("SELECT password FROM woivccvvos2pfj3e.customer WHERE username = '?';", [username], (err, result, fields) => {
+      console.log(password);
+      bcrypt.compare(req.body.password, storedPassword, (err, resultPassword) => {
+        if (resultPassword == true) {
+            console.log('Successful Login - Session created.')
+            req.session.loggedin = true;
+            req.session.username = username;
+            //res.redirect('/register');
+        } else {
+            //res.send('Incorrect username and/or password');
+          } 
+      });
+    })
+  }
+});
+
 
 customerRouter.get("/profile", (req, res) => {
   let sql = "select * from customer where membership_ID = 7";
@@ -207,8 +234,6 @@ customerRouter.post("/submitPassword/:id", parseForm, (req, res, next) => {
     }
 
   });
-
-
 });
 
 customerRouter.get("/vieworder/:id", (req, res, next) => {
@@ -232,5 +257,19 @@ customerRouter.get("/vieworder/:id", (req, res, next) => {
 
 
 });
+
+function checkAuthenticated(req, res, next) {
+  if(req.isAuthenticated()) {
+    return next();
+  }
+  res.redirect('/login');
+}
+
+function checkNotAuthenticated(req, res, next) {
+  if(req.isAuthenticated()) {
+    res.redirect('/')
+  }
+  next()
+}
 
 module.exports = customerRouter;
