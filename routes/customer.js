@@ -131,9 +131,6 @@ customerRouter.post("/signin", parseForm, (req, res) => {
         if (err) console.log("here 2 " + err);
         const storedPassword = result[0].password;
         console.log("Password is: " + storedPassword);
-        if(storedPassword === "$2a$10$zhL9kSr1DqXDPPf6VsYiv.gzBle9d5sGGp/slNm4IVU2nplxMt2a."){
-          console.log("YAY");
-        }
 
         const memID = result[0].membership_ID;
 
@@ -142,7 +139,20 @@ customerRouter.post("/signin", parseForm, (req, res) => {
           console.log('Successful Login - Session created.')
           req.session.loggedin = true;
           req.session.username = username;
-          res.redirect('profile/' + memID);
+          let checkAdmin = "select isAdmin from customer where username = ?";
+          db.query(checkAdmin, [username], (err, result, fields)=>{
+            if(err){
+              console.log(err);
+              res.send(500);
+            }
+            if(result[0].isAdmin === 1){
+              res.redirect("/admin");
+            }
+            else{
+              res.redirect('profile/' + memID);
+            }
+          });
+          
         } else {
           console.log(password, " ", storedPassword);
           res.render("user/signup", {
