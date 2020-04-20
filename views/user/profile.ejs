@@ -14,7 +14,7 @@
 
   <div class="container">
     <h3 class="my-5">Welcome <%= data[0].first_name %>! Modify your information as needed </h3>
-    <form action="profilePost" method="POST">
+    <form action="<%= data[0].membership_ID %>" method="POST">
       <div class="form-row">
         <div class="col-md-4 mb-3">
           <label for="validationServer013">First name</label>
@@ -75,14 +75,15 @@
 
         </div>
 
-        <a class="my-2" href="changePassword/<%= data[0].membership_ID %>">Change Password</a>
+        <a class="my-2" href="/customer/changePassword/<%= data[0].membership_ID %>">Change Password</a>
       </div>
 
       <button class="btn btn-primary my-2" type="submit">Submit Change</button>
     </form>
 
-    <a href="vieworder/<%= data[0].membership_ID %>" class="btn btn-outline-dark"><i
-        class="fa fa-angle-left"></i>View Orders</a>
+    <a href="/customer/vieworder/<%= data[0].membership_ID %>" class="btn btn-outline-dark"><i
+        class="fa fa-angle-left"></i>View
+      Orders</a>
   </div>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-validator/0.5.3/js/bootstrapValidator.min.js" />
   <!-- Optional JavaScript -->

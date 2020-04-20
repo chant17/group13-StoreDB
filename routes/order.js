@@ -63,7 +63,7 @@ orderRouter.get("/orderinfo/:id/:total", parseForm, (req, res) => {
             db.query(sql4, [cartID], (err, result, fields) => {
                 if (err) console.log("HERE 6" + err);
             });
-            //CHECK THIS SHIT OUT TOMORROW
+
             let checkCredit = "SELECT store_credit from customer where membership_ID = ?";
             db.query(checkCredit, [id], (err, result, fields) => {
                 if (err) console.log("check credit error " + err);

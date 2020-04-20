@@ -1,71 +1,82 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <title>Sign Up</title>
 </head>
+
 <body>
     <%- include('../partials/header') %>
     <div class="container">
-        <form class="form-horizontal" role="form", action="", method="POST">
+        <form class="form-horizontal" role="form" , action="signup" , method="POST">
             <h2>Register</h2>
             <%- include('../partials/messages') %>
             <div class="form-group">
                 <label for="firstName" class="col-sm-3 control-label">First Name*</label>
                 <div class="col-sm-9">
-                    <input type="text" id="firstName" placeholder="First Name" name="firstname" class="form-control" value="<%=typeof name != 'undefined' ? name : '' %>" autofocus required>
+                    <input type="text" id="firstName" placeholder="First Name" name="firstname" class="form-control"
+                        value="<%=typeof name != 'undefined' ? name : '' %>" autofocus required>
                 </div>
             </div>
             <div class="form-group">
                 <label for="lastName" class="col-sm-3 control-label">Last Name*</label>
                 <div class="col-sm-9">
-                    <input type="text" id="lastName" placeholder="Last Name" name="lastname" class="form-control" autofocus required>
+                    <input type="text" id="lastName" placeholder="Last Name" name="lastname" class="form-control"
+                        autofocus required>
                 </div>
             </div>
             <div class="form-group">
                 <label for="email" class="col-sm-3 control-label">Email*</label>
                 <div class="col-sm-9">
-                    <input type="email" id="email" placeholder="Email" name= "email" class="form-control" required>
+                    <input type="email" id="email" placeholder="Email" name="email" class="form-control" required>
                 </div>
             </div>
             <div class="form-group">
                 <label for="username" class="col-sm-3 control-label">Username*</label>
                 <div class="col-sm-9">
-                    <input type="text" id="username" placeholder="Please enter a username" name="username" class="form-control" autofocus required>
+                    <input type="text" id="username" placeholder="Please enter a username" name="username"
+                        class="form-control" autofocus required>
                 </div>
             </div>
             <div class="form-group">
                 <label for="password" class="col-sm-3 control-label">Password*</label>
                 <div class="col-sm-9">
-                    <input type="password" id="password" placeholder="Password" name="password" class="form-control" required>
+                    <input type="password" id="password" placeholder="Password" name="password" class="form-control"
+                        required>
                 </div>
             </div>
             <div class="form-group">
                 <label for="password" class="col-sm-3 control-label">Confirm Password*</label>
                 <div class="col-sm-9">
-                    <input type="password" id="password" placeholder="Password" name="password2" class="form-control" required>
+                    <input type="password" id="password" placeholder="Password" name="password2" class="form-control"
+                        required>
                 </div>
             </div>
             <div class="form-group">
                 <label for="phoneNumber" class="col-sm-3 control-label">Phone number*</label>
                 <div class="col-sm-9">
-                    <input type="phoneNumber" id="phoneNumber" placeholder="Phone Number" name="phone" class="form-control" required>
+                    <input type="phoneNumber" id="phoneNumber" placeholder="Phone Number" name="phone"
+                        class="form-control" required>
                     <span class="help-block"></span>
                 </div>
             </div>
             <div class="form-group">
-                <label for="address-line1" class= "col-sm-3 control-label">Address Line 1*</label>
+                <label for="address-line1" class="col-sm-3 control-label">Address Line 1*</label>
                 <div class="col-sm-9">
-                    <input type="address-line1" id="address-line1" placeholder="Address Line 1" name="address1" class="form-control" required>
+                    <input type="address-line1" id="address-line1" placeholder="Address Line 1" name="address1"
+                        class="form-control" required>
                     <span class="help-block"></span>
                 </div>
             </div>
             <div class="form-group">
                 <label for="address-line2" class="col-sm-3 control-label">Address Line 2</label>
                 <div class="col-sm-9">
-                    <input type="address-line2" id="address-line2" placeholder="Address Line 2" name="address2" class="form-control">
+                    <input type="address-line2" id="address-line2" placeholder="Address Line 2" name="address2"
+                        class="form-control">
                     <span class="help-block">Apartment # etc.</span>
                 </div>
             </div>
@@ -336,14 +347,15 @@
                         <option value="ZW">Zimbabwe</option>
                     </select>
                 </div>
-            </div>        
+            </div>
             <div class="form-group">
                 <div class="col-sm-9 col-sm-offset-3">
                     <span class="help-block">*Required fields</span>
                 </div>
             </div>
             <button type="submit" class="btn btn-primary btn-block">Register</button>
-        </form>   
-    </div> 
+        </form>
+    </div>
 </body>
+
 </html>

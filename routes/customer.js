@@ -3,13 +3,13 @@ const express = require("express");
 const customerRouter = express.Router();
 const mysql = require('mysql');
 const db = require("../config/db");
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
-var session = require('express-session');
-var bcrypt = require('bcrypt');
-var passport = require('passport');
+const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
+const session = require('express-session');
+const bcrypt = require('bcryptjs');
+const passport = require('passport');
 
-//Router Middleware
+//Router Middleware 
 var parseForm = bodyParser.urlencoded({
   extended: true
 });
@@ -17,7 +17,7 @@ customerRouter.use(cookieParser());
 
 //SQL Pool
 customerRouter.get("/signup", (req, res, next) => {
-  res.render('user/signup', {});
+  res.render('user/signup');
 });
 
 // temporary make id function
@@ -87,38 +87,29 @@ customerRouter.post('/signup', parseForm, async (req, res, next) => {
     })
   } else {
     let checkExists = "SELECT COUNT(*) AS cnt FROM customer WHERE customer.email = ?";
-    db.query(checkExists, [email], (err, data) => {
+    db.query(checkExists, [email], async (err, data) => {
       if (err || data[0].cnt > 0) {
         console.log('User email already exists in database', err); // log error for dev
         res.render('user/signup', {
           data: 'Failed to create new user'
         })
       } else {
-        let insertUser = 'INSERT INTO customer (membership_ID, username, first_name, last_name, email, phone_number, address1, address2, city, state, zip_code, country) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)';
-        let userID = makeid(5);
-        db.query(insertUser, [userID, username, firstname, lastname, email, phone, address1, address2, city, state, zip, country], (err, result, fields) => {
+        let insertUser = 'INSERT INTO customer (username, first_name, last_name, email, phone_number, address1, address2, city, state, zip_code, country, password) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)';
+        const hashedPassword = await bcrypt.hashSync(password, 10);
+        console.log("here: " + hashedPassword + "| OG password: ", password, " | " + username);
+        db.query(insertUser, [username, firstname, lastname, email, phone, address1, address2, city, state, zip, country, hashedPassword], (err, result, fields) => {
           if (err) {
             console.log('Failed to insert new customer', err);
-          } else {
-            async function hashPassword(password) {
-              const saltRounds = 10;
-              const hashedPassword = await new Promise((resolve, reject) => {
-                bcrypt.hash(password, saltRounds, (err, hash) => {
-                  if (err) reject(err);
-                  resolve(hash);
-                });
-              });
-              db.query("UPDATE `woivccvvos2pfj3e`.`customer` SET `password` = '"+hashedPassword+"' WHERE (`membership_ID` = '"+userID+"');");
-            };
-            hashPassword(password);
-            console.log('New customer registered and added to database');
-            res.render('user/signin');
+            res.end();
           }
-        })
+          console.log('New customer registered and added to database');
+          res.render('user/signin');
+        });
       }
-    })
+    });
   }
 });
+
 // Login Page
 customerRouter.get("/signin", (req, res) => {
   res.render('user/signin');
@@ -129,46 +120,52 @@ customerRouter.post("/signin", parseForm, (req, res) => {
   var password = req.body.password;
   console.log(username);
   console.log(password);
-  function fetchPassword(username, callback) {
-    db.query('SELECT password FROM woivccvvos2pfj3e.customer WHERE username = ?', username, function(err, rows) {
-      if (err) {
-        callback(err, null);
-      } else {
-        callback(null, rows[0].password);
-      }
-    });
-  }
-  var storedPassword;
-  fetchPassword(username, function(err, content) {
-    if (err) {
-      res.send(err);
-    } else {
-      storedPassword = content;
-      console.log(storedPassword);
-      res.send('Password from db is: ' + storedPassword);
-    }
-  })
-  if (username && password) { 
-    db.query("SELECT password FROM woivccvvos2pfj3e.customer WHERE username = '?';", [username], (err, result, fields) => {
-      console.log(password);
-      bcrypt.compare(req.body.password, storedPassword, (err, resultPassword) => {
-        if (resultPassword == true) {
-            console.log('Successful Login - Session created.')
-            req.session.loggedin = true;
-            req.session.username = username;
-            //res.redirect('/register');
+  let sql = "SELECT count(*) as userCheck from customer where username = ?;";
+  db.query(sql, [username], (err, result, fields) => {
+    if (err) console.log("here 1 " + err);
+    let userCheck = result[0].userCheck;
+    console.log("USER CHECK is " + userCheck);
+    if (userCheck === 1) {
+      let passQ = "SELECT password, membership_ID FROM customer where username = ?;";
+      db.query(passQ, [username], async (err, result, fields) => {
+        if (err) console.log("here 2 " + err);
+        const storedPassword = result[0].password;
+        console.log("Password is: " + storedPassword);
+        if(storedPassword === "$2a$10$zhL9kSr1DqXDPPf6VsYiv.gzBle9d5sGGp/slNm4IVU2nplxMt2a."){
+          console.log("YAY");
+        }
+
+        const memID = result[0].membership_ID;
+
+        const validate = await bcrypt.compareSync(password, storedPassword);
+        if (validate) {
+          console.log('Successful Login - Session created.')
+          req.session.loggedin = true;
+          req.session.username = username;
+          res.redirect('profile/' + memID);
         } else {
-            //res.send('Incorrect username and/or password');
-          } 
+          console.log(password, " ", storedPassword);
+          res.render("user/signup", {
+            message: "Incorrect Password or Username"
+          });
+        }
       });
-    })
-  }
+    } else {
+      console.log("Got here");
+      res.render("user/signup", {
+        message: "Incorrect Password or Username"
+      });
+    }
+  });
+
 });
 
 
-customerRouter.get("/profile", (req, res) => {
-  let sql = "select * from customer where membership_ID = 7";
-  db.query(sql, (err, result, fields) => {
+customerRouter.get("/profile/:id", (req, res) => {
+  console.log("got here");
+  let sql = "select * from customer where membership_ID = ?";
+  const id = req.params.id;
+  db.query(sql,[id], (err, result, fields) => {
     res.render('user/profile', {
       data: result
     });
@@ -176,7 +173,8 @@ customerRouter.get("/profile", (req, res) => {
 
 });
 
-customerRouter.post("/profilePost", parseForm, (req, res) => {
+customerRouter.post("/profile/:id", parseForm, (req, res) => {
+  let id = req.params.id;
   let fname = req.body.fname;
   let lname = req.body.lname;
   let uname = req.body.uname;
@@ -186,12 +184,12 @@ customerRouter.post("/profilePost", parseForm, (req, res) => {
   let state = req.body.state
   let zip = req.body.zip;
   console.log(fname, lname, uname, city, phoneNumber, email, state, zip);
-  let sql = "UPDATE customer SET first_name = ?, last_name = ?, username = ?, city = ?, phone_number = ?, email = ? , state = ?, zip_code=? WHERE membership_ID = 7";
-  db.query(sql, [fname, lname, uname, city, phoneNumber, email, state, zip], (err, result, fields) => {
+  let sql = "UPDATE customer SET first_name = ?, last_name = ?, username = ?, city = ?, phone_number = ?, email = ? , state = ?, zip_code=? WHERE membership_ID = ?";
+  db.query(sql, [fname, lname, uname, city, phoneNumber, email, state, zip, id], (err, result, fields) => {
     if (err) {
       console.log(err);
     }
-    res.redirect("profile");
+    res.redirect(id);
   });
 });
 
@@ -243,14 +241,15 @@ customerRouter.get("/vieworder/:id", (req, res, next) => {
     if (err) console.log(err);
     let price = [];
     //let price = result[0].amount;
-    for(var i=0; i<result.length; i++){
+    for (var i = 0; i < result.length; i++) {
       price.push(result[i].amount);
     }
     db.query(sql, [id], (err, result, fields) => {
       if (err) console.log(err);
       res.render('shop/orderProfile', {
         data: result,
-        orderPrice: price
+        orderPrice: price,
+        memID: id
       });
     });
   });
@@ -259,14 +258,14 @@ customerRouter.get("/vieworder/:id", (req, res, next) => {
 });
 
 function checkAuthenticated(req, res, next) {
-  if(req.isAuthenticated()) {
+  if (req.isAuthenticated()) {
     return next();
   }
   res.redirect('/login');
 }
 
 function checkNotAuthenticated(req, res, next) {
-  if(req.isAuthenticated()) {
+  if (req.isAuthenticated()) {
     res.redirect('/')
   }
   next()
