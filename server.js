@@ -11,8 +11,6 @@ app.use(express.static(path.join(__dirname + "/public")));
 //ROUTES VARIABLE
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
-const passport = require('passport');
-const initializePassport = require("./config/passport");
 const flash = require('connect-flash');
 
 

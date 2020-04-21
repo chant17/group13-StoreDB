@@ -6,7 +6,6 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const bcrypt = require('bcryptjs');
-const passport = require('passport');
 
 //Router Middleware 
 var parseForm = bodyParser.urlencoded({
