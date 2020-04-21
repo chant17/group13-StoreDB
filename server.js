@@ -16,7 +16,6 @@ const initializePassport = require("./config/passport");
 const flash = require('connect-flash');
 
 
-
 // Middleware and stuff
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({
@@ -29,11 +28,21 @@ app.use(session({
   resave: false,
   saveUninitialized: false,
   cookie: {
-    maxAge: 1000 * 60 * 60 * 2,
+    maxAge: 1000 * 60 * 60 * 4,
     sameSite: true,
 
   }
 }));
+
+app.use(function(req, res, next) {
+  res.locals.loggedin = req.session.loggedin;
+  res.locals.memID = req.session.memID;
+  res.locals.adminLogin = req.session.adminLogin;
+  res.locals.username = req.session.username;
+  res.locals.storeCredit = req.session.storeCredit;
+  next();
+});
+
 app.use(flash());
 // app.use(passport.initialize());
 // app.use(passport.session());

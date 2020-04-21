@@ -32,9 +32,9 @@ function makeid(length) {
 
 const redirectProfile = (req, res, next) => {
   if (req.session.loggedin) {
-      res.redirect('/customer/profile/' + req.session.memID);
+    res.redirect('/customer/profile/' + req.session.memID);
   } else {
-      next();
+    next();
   }
 }
 
@@ -90,7 +90,10 @@ customerRouter.post('/signup', parseForm, async (req, res, next) => {
       city,
       state,
       zip,
-      country
+      country,
+      login: req.session.loggedin,
+      memID: req.session.memID,
+      adminAccess: req.session.isAdmin
     })
   } else {
     let checkExists = "SELECT COUNT(*) AS cnt FROM customer WHERE customer.username = ?";
@@ -98,7 +101,10 @@ customerRouter.post('/signup', parseForm, async (req, res, next) => {
       if (err || data[0].cnt > 0) {
         console.log('Username already exists in database', err); // log error for dev
         res.render('user/signup', {
-          data: 'Failed to create new user'
+          data: 'Failed to create new user',
+          login: req.session.loggedin,
+          memID: req.session.memID,
+          adminAccess: req.session.isAdmin
         })
       } else {
         let insertUser = 'INSERT INTO customer (username, first_name, last_name, email, phone_number, address1, address2, city, state, zip_code, country, password) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)';
@@ -111,7 +117,11 @@ customerRouter.post('/signup', parseForm, async (req, res, next) => {
           }
           console.log('New customer registered and added to database');
 
-          res.render('user/signin');
+          res.render('user/signin', {
+            login: req.session.loggedin,
+            memID: req.session.memID,
+            adminAccess: req.session.isAdmin
+          });
         });
       }
     });
@@ -119,11 +129,15 @@ customerRouter.post('/signup', parseForm, async (req, res, next) => {
 });
 
 // Login Page
-customerRouter.get("/signin", redirectProfile ,(req, res) => {
-  res.render('user/signin');
+customerRouter.get("/signin", redirectProfile, (req, res) => {
+  res.render('user/signin', {
+    login: req.session.loggedin,
+    memID: req.session.memID,
+    adminAccess: req.session.isAdmin
+  });
 });
 
-customerRouter.post("/signin", redirectProfile, parseForm, (req, res) => {
+customerRouter.post("/signin", parseForm, (req, res) => {
   var username = req.body.username;
   var password = req.body.password;
   console.log(username);
@@ -148,33 +162,33 @@ customerRouter.post("/signin", redirectProfile, parseForm, (req, res) => {
           req.session.loggedin = true;
           req.session.username = username;
           req.session.memID = memID;
+          req.session.adminLogin = false;
           console.log("session username: " + req.session.memID);
           let checkAdmin = "select isAdmin from customer where username = ?";
-          db.query(checkAdmin, [username], (err, result, fields)=>{
-            if(err){
+          db.query(checkAdmin, [username], (err, result, fields) => {
+            if (err) {
               console.log(err);
               res.send(500);
             }
-            if(result[0].isAdmin === 1){
+            if (result[0].isAdmin === 1) {
               req.session.adminLogin = true;
               res.redirect("/admin");
-            }
-            else{
+            } else {
               res.redirect('profile/' + memID);
             }
           });
-          
+
         } else {
           console.log(password, " ", storedPassword);
           res.render("user/signup", {
-            message: "Incorrect Password or Username"
+            message: "Incorrect Password or Username",
           });
         }
       });
     } else {
       console.log("Got here");
       res.render("user/signup", {
-        message: "Incorrect Password or Username"
+        message: "Incorrect Password or Username",
       });
     }
   });
@@ -182,19 +196,19 @@ customerRouter.post("/signin", redirectProfile, parseForm, (req, res) => {
 });
 
 
-customerRouter.get("/profile/:id", (req, res) => {
+customerRouter.get("/profile/:id" , (req, res) => {
   console.log("got here");
   let sql = "select * from customer where membership_ID = ?";
   const id = req.params.id;
-  db.query(sql,[id], (err, result, fields) => {
+  db.query(sql, [id], (err, result, fields) => {
     res.render('user/profile', {
-      data: result
+      data: result,
     });
   });
 
 });
 
-customerRouter.post("/profile/:id", parseForm, (req, res) => {
+customerRouter.post("/profile/:id" ,parseForm, (req, res) => {
   let id = req.params.id;
   let fname = req.body.fname;
   let lname = req.body.lname;
@@ -218,7 +232,7 @@ customerRouter.get("/changePassword/:id", (req, res, next) => {
   let id = req.params.id;
   let sql = "select count(password) from customer where password = ";
   res.render('user/passwordChange', {
-    data: id
+    data: id,
   });
 });
 customerRouter.post("/submitPassword/:id", parseForm, (req, res, next) => {
@@ -238,17 +252,17 @@ customerRouter.post("/submitPassword/:id", parseForm, (req, res, next) => {
         db.query(q, [newPass1, id], (err, result, fields) => {
           if (err) console.log(err);
           res.render('user/passwordRes', {
-            data: 2
+            data: 2,
           });
         });
       } else {
         res.render('user/passwordRes', {
-          data: 1
+          data: 1,
         });
       }
     } else {
       res.render('user/passwordRes', {
-        data: 1
+        data: 1,
       });
     }
 
@@ -270,12 +284,22 @@ customerRouter.get("/vieworder/:id", (req, res, next) => {
       res.render('shop/orderProfile', {
         data: result,
         orderPrice: price,
-        memID: id
+        memID: id,
       });
     });
   });
 
 
+});
+customerRouter.get("/logout", (req, res, next)=>{
+  try{
+  req.session.destroy();
+  res.redirect('/');
+  } catch(e){
+    console.log(e);
+    res.sendStatus(500);
+    res.end();
+  }
 });
 
 function checkAuthenticated(req, res, next) {

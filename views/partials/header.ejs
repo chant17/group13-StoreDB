@@ -10,30 +10,49 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto topBotomBordersOut">
       <li class="nav-item active">
-        <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="/">Home</a>
       </li>
+      <% if(loggedin === true && adminLogin === false) {%>
+      <li class="nav-item active">
+        <a class="nav-link" href="/customer/profile/<%=memID%>">Profile <span class="sr-only"></span></a>
+      </li>
+      <% } %>
+      <% if(adminLogin === true) {%>
+        <li class="nav-item active">
+          <a class="nav-link" href="/admin">Admin Page <span class="sr-only"></span></a>
+        </li>
+        <% } %>
+      
     </ul>
 
-    <ul class="navbar-nav topBotomBordersOut" >
+    <ul class="navbar-nav topBotomBordersOut">
       <li class='nav-item'>
-        <a class="nav-link" href="/department/1">Shirts</a>
+        <a class="nav-link my-2" href="/department/1">Shirts</a>
       </li>
       <li class='nav-item'>
-        <a class="nav-link" href="/department/2">Outerwear</a>
+        <a class="nav-link my-2" href="/department/2">Outerwear</a>
       </li>
       <li class='nav-item'>
-        <a class="nav-link" href="/department/3">Pants</a>
+        <a class="nav-link my-2" href="/department/3">Pants</a>
       </li>
       <li class='nav-item'>
-        <a class="nav-link" href="/department/4">Shoes</a>
+        <a class="nav-link my-2" href="/department/4">Shoes</a>
       </li>
       <li class='nav-item'>
-        <a class="nav-link" href="/department/5">Accesories</a>
+        <a class="nav-link my-2" href="/department/5">Accesories</a>
       </li>
 
-      <a class="nav-link" href="/cart"><button class="btn btn-info mr-2 my-2 my-sm-0" type="submit">Cart</button></a>
-      <a class="nav-link" href="/customer/signin"><button class="btn btn-success mr-2 my-2 my-sm-0", type="submit">Login</button></a> 
-      <a class="nav-link" href="/customer/signup"><button class="btn btn-primary mr-2 my-2 my-sm-0" type="submit">Register</button></a>
+      <a class="nav-link" href="/cart"><button class="btn btn-dark mr-2 my-2 my-sm-0" type="submit">Cart</button></a>
+      
+      <% if(loggedin){%>
+        <a class="nav-link" href="/customer/logout"><button class="btn btn-danger mr-2 my-2 my-sm-0" ,
+          type="submit">Logout</button></a>
+      <% } else{ %>
+      <a class="nav-link" href="/customer/signin"><button class="btn btn-outline-dark mr-2 my-2 my-sm-0" ,
+          type="submit">Login</button></a>
+      <a class="nav-link" href="/customer/signup"><button class="btn btn-secondary mr-2 my-2 my-sm-0"
+          type="submit">Register</button></a>
+      <% } %>
     </ul>
 
   </div>

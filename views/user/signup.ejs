@@ -7,57 +7,78 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <title>Sign Up</title>
+    <style>
+        body {
+            background-image: url("https://images.unsplash.com/photo-1544441893-675973e31985?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80");
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
+
+        }
+
+        hr {
+            display: block;
+            height: 1px;
+            border: 0;
+            border-top: 1px solid #ccc;
+            margin: 1em 0;
+            padding: 0;
+        }
+    </style>
 </head>
 
 <body>
     <%- include('../partials/header') %>
-    <div class="container">
-        <form class="form-horizontal" role="form" , action="signup" , method="POST">
-            <h2>Register</h2>
+    <div class="container my-2">
+        <form class="form" role="form" , action="signup" , method="POST">
+            <h2 class="text-white">Register</h2>
+            <hr>
             <%- include('../partials/messages') %>
             <div class="form-group">
-                <label for="firstName" class="col-sm-3 control-label">First Name*</label>
+                <label for="firstName" class="col-sm-3 control-label text-white">First Name*</label>
                 <div class="col-sm-9">
                     <input type="text" id="firstName" placeholder="First Name" name="firstname" class="form-control"
                         value="<%=typeof name != 'undefined' ? name : '' %>" autofocus required>
                 </div>
+
             </div>
             <div class="form-group">
-                <label for="lastName" class="col-sm-3 control-label">Last Name*</label>
+                <label for="lastName" class="col-sm-3 control-label text-white">Last Name*</label>
                 <div class="col-sm-9">
                     <input type="text" id="lastName" placeholder="Last Name" name="lastname" class="form-control"
                         autofocus required>
                 </div>
             </div>
             <div class="form-group">
-                <label for="email" class="col-sm-3 control-label">Email*</label>
+                <label for="email" class="col-sm-3 control-label text-white">Email*</label>
                 <div class="col-sm-9">
                     <input type="email" id="email" placeholder="Email" name="email" class="form-control" required>
                 </div>
             </div>
             <div class="form-group">
-                <label for="username" class="col-sm-3 control-label">Username*</label>
+                <label for="username" class="col-sm-3 control-label text-white">Username*</label>
                 <div class="col-sm-9">
                     <input type="text" id="username" placeholder="Please enter a username" name="username"
                         class="form-control" autofocus required>
                 </div>
             </div>
             <div class="form-group">
-                <label for="password" class="col-sm-3 control-label">Password*</label>
+                <label for="password" class="col-sm-3 control-label text-white">Password*</label>
                 <div class="col-sm-9">
                     <input type="password" id="password" placeholder="Password" name="password" class="form-control"
                         required>
                 </div>
             </div>
             <div class="form-group">
-                <label for="password" class="col-sm-3 control-label">Confirm Password*</label>
+                <label for="password" class="col-sm-3 control-label text-white">Confirm Password*</label>
                 <div class="col-sm-9">
                     <input type="password" id="password" placeholder="Password" name="password2" class="form-control"
                         required>
                 </div>
             </div>
             <div class="form-group">
-                <label for="phoneNumber" class="col-sm-3 control-label">Phone number*</label>
+                <label for="phoneNumber" class="col-sm-3 control-label text-white">Phone number*</label>
                 <div class="col-sm-9">
                     <input type="phoneNumber" id="phoneNumber" placeholder="Phone Number" name="phone"
                         class="form-control" required>
@@ -65,7 +86,7 @@
                 </div>
             </div>
             <div class="form-group">
-                <label for="address-line1" class="col-sm-3 control-label">Address Line 1*</label>
+                <label for="address-line1" class="col-sm-3 control-label text-white">Address Line 1*</label>
                 <div class="col-sm-9">
                     <input type="address-line1" id="address-line1" placeholder="Address Line 1" name="address1"
                         class="form-control" required>
@@ -73,36 +94,36 @@
                 </div>
             </div>
             <div class="form-group">
-                <label for="address-line2" class="col-sm-3 control-label">Address Line 2</label>
+                <label for="address-line2" class="col-sm-3 control-label text-white">Address Line 2</label>
                 <div class="col-sm-9">
                     <input type="address-line2" id="address-line2" placeholder="Address Line 2" name="address2"
                         class="form-control">
-                    <span class="help-block">Apartment # etc.</span>
+                    <span class="help-block text-white">Apartment # etc.</span>
                 </div>
             </div>
             <div class="form-group">
-                <label for="city" class="col-sm-3 control-label">City*</label>
+                <label for="city" class="col-sm-3 control-label text-white">City*</label>
                 <div class="col-sm-9">
                     <input type="city" id="city" placeholder="City" name="city" class="form-control" required>
                     <p class="help-block"></p>
                 </div>
             </div>
             <div class="form-group">
-                <label for="state" class="col-sm-3 control-label">State*</label>
+                <label for="state" class="col-sm-3 control-label text-white">State*</label>
                 <div class="col-sm-3">
                     <input type="state" id="state" placeholder="State" name="state" class="form-control" required>
                     <span class="help-block"></span>
                 </div>
             </div>
             <div class="form-group">
-                <label for="zip" class="col-sm-3 control-label">Zip Code*</label>
+                <label for="zip" class="col-sm-3 control-label text-white">Zip Code*</label>
                 <div class="col-sm-3">
                     <input type="zip" id="zip" placeholder="Zip Code" name="zip" class="form-control" required>
                     <p class="help-block"></p>
                 </div>
             </div>
             <div class="form-group">
-                <label for="country" class="col-sm-3 control-label">Country*</label>
+                <label for="country" class="col-sm-3 control-label text-white">Country*</label>
                 <div class="col-sm-3">
                     <select id="country" name="country" class="form-control" required>
                         <option value="" selected="selected">(please select a country)</option>
@@ -350,10 +371,10 @@
             </div>
             <div class="form-group">
                 <div class="col-sm-9 col-sm-offset-3">
-                    <span class="help-block">*Required fields</span>
+                    <span class="help-block text-white">*Required fields</span>
                 </div>
             </div>
-            <button type="submit" class="btn btn-primary btn-block">Register</button>
+            <button type="submit" class="btn btn-white btn-block col-2 my-2">Register</button>
         </form>
     </div>
 </body>

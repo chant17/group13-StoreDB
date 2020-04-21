@@ -6,10 +6,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <style>
+        body {
+            background: linear-gradient(-45deg, #080808, #84c7e6, #d34646, #c499cf);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+        }
+
+        @keyframes gradient {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+    </style>
     <title>Store Database</title>
 </head>
 
 <body>
+
     <%- include('../partials/header') %>
     <% var m = Math.ceil(data.length/3); %>
     <% var loopCounter = 0; %>
@@ -26,13 +48,13 @@
                     <h5 class="card-title"> <%= data[loopCounter].product_name %> </h5>
                     <p class="card-text"> <%= data[loopCounter].product_desc %> </p>
                     <p class="card-text"><small class="text-muted"></small></p>
-                    
+
                     <div class="d-flex">
                         <div class="p-2"><a href="/product/cart/<%= data[loopCounter].product_ID %>" <button
-                            class="btn btn-info mr-2 my-2 my-sm-0" type="Order">Add to cart</button></a></div>
+                                class="btn btn-info mr-2 my-2 my-sm-0" type="Order">Add to cart</button></a></div>
                         <div class="ml-auto p-2">$<%= data[loopCounter].buy_price %> </div>
-                      </div>
-                    
+                    </div>
+
                 </div>
             </div>
             <% loopCounter += 1; %>
@@ -41,6 +63,8 @@
         </div>
         <% } %>
     </div>
+
+
 
 </body>
 

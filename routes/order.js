@@ -26,11 +26,11 @@ orderRouter.get("/orderinfo/:id/:total", parseForm, (req, res) => {
     var price = req.params.total;
     let transID = makeid(6);
     let paymentID = makeid(2) + '-' + makeid(7);
-    let sql = "select k.cartID from customer c, cust_cart k where c.membership_ID = k.FK_membershipID and c.membership_ID = 7;";
+    let sql = "select k.cartID from customer c, cust_cart k where c.membership_ID = k.FK_membershipID and c.membership_ID = ?;";
     let sql2 = "insert into order_information (transaction_id, FK_member_transaction, FK_payment_ID, order_date, expected_Delivery, shipped_Date, order_status, FK_cart_transaction) values (?,?,?,?,?,?,0,?);";
     let sql3 = "insert into payment_information (FK_customer_payment, checkNum, payment_date, amount) VALUES (?,?,?,?);";
     let sql4 = "DELETE from cart where FK_cart_ID = ?";
-    db.query(sql, [id], (err, result, fields) => {
+    db.query(sql, [id, req.session.memID], (err, result, fields) => {
         if (err) console.log("here1 " + err);
         let cartID = result[0].cartID;
         console.log(cartID);
@@ -51,31 +51,43 @@ orderRouter.get("/orderinfo/:id/:total", parseForm, (req, res) => {
         let sql5 = "select FK_product_cart from cart where FK_cart_ID = ?;";
         db.query(sql5, [cartID], (err, result, fields) => {
             if (err) console.log("here 7 " + err);
-            if (result.length == 0) res.redirect("/");
+            if (result.length == 0){
+                res.redirect("/");
+                console.log("NO PRODUCT!!");
+                res.end();
+            }
+
             for (var i = 0; i < result.length; i++) {
                 let prodId = result[i].FK_product_cart;
                 console.log(prodId);
                 let sql6 = "update product set quantity_inStock = quantity_inStock - (select quantity from cart where FK_product_cart = ?) where product_id = ?;";
                 db.query(sql6, [prodId, prodId], (err, result, fields) => {
-                    if (err) console.log("here 9 " + err);
+                    if (err) {
+                        console.log("here 9 " + err);
+                    }
                 });
             }
             db.query(sql4, [cartID], (err, result, fields) => {
-                if (err) console.log("HERE 6" + err);
+                if (err) {
+                    console.log("HERE 6" + err);
+                }
+                let checkPrice = "SELECT amount from payment_information where FK_customer_payment = ? AND checkNum = ?";
+                db.query(checkPrice, [req.session.memID, paymentID], (err, result, fields) => {
+                    if (err) {
+                        console.log("price check error: " + err);
+                    }
+                    let updatedPrice = result[0].amount;
+                    console.log("Price is: " + updatedPrice);
+                    res.render('shop/orderInfo', {
+                        status: 0,
+                        total: updatedPrice,
+                        orderID: transID
+                    });
+                });
+
             });
 
-            let checkCredit = "SELECT store_credit from customer where membership_ID = ?";
-            db.query(checkCredit, [id], (err, result, fields) => {
-                if (err) console.log("check credit error " + err);
-                if (result[0].store_credit > 1000) {
-                    price = (price / 2).toFixed(2);
-                }
-                res.render('shop/orderInfo', {
-                    status: 0,
-                    total: price,
-                    orderID: transID
-                });
-            });
+
         });
 
     });
