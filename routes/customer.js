@@ -242,14 +242,16 @@ customerRouter.post("/submitPassword/:id", parseForm, (req, res, next) => {
   let newPass1 = req.body.newPass1;
   let newPass2 = req.body.newPass2;
   console.log(oldPass + " " + newPass1 + " " + newPass2);
-  db.query(sql, [id], (err, result, fields) => {
+  db.query(sql, [id], async (err, result, fields) => {
     if (err) {
       console.log(err);
     }
-    if (oldPass === result[0].password) {
+    const validate = await bcrypt.compareSync(oldPass, result[0].password);
+    if (validate) {
+      const hashedPassword = await bcrypt.hashSync(newPass1, 10);
       let q = "UPDATE customer set password = ? WHERE membership_ID = ?";
       if (newPass1 === newPass2) {
-        db.query(q, [newPass1, id], (err, result, fields) => {
+        db.query(q, [hashedPassword, id], (err, result, fields) => {
           if (err) console.log(err);
           res.render('user/passwordRes', {
             data: 2,
