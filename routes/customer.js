@@ -1,7 +1,6 @@
 // Handle all customer related routes
 const express = require("express");
 const customerRouter = express.Router();
-const mysql = require('mysql');
 const db = require("../config/db");
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
@@ -29,6 +28,14 @@ function makeid(length) {
     result += characters.charAt(Math.floor(Math.random() * charactersLength));
   }
   return result;
+}
+
+const redirectProfile = (req, res, next) => {
+  if (req.session.loggedin) {
+      res.redirect('/customer/profile/' + req.session.memID);
+  } else {
+      next();
+  }
 }
 
 // Register Handle
@@ -86,10 +93,10 @@ customerRouter.post('/signup', parseForm, async (req, res, next) => {
       country
     })
   } else {
-    let checkExists = "SELECT COUNT(*) AS cnt FROM customer WHERE customer.email = ?";
-    db.query(checkExists, [email], async (err, data) => {
+    let checkExists = "SELECT COUNT(*) AS cnt FROM customer WHERE customer.username = ?";
+    db.query(checkExists, [username], async (err, data) => {
       if (err || data[0].cnt > 0) {
-        console.log('User email already exists in database', err); // log error for dev
+        console.log('Username already exists in database', err); // log error for dev
         res.render('user/signup', {
           data: 'Failed to create new user'
         })
@@ -103,6 +110,7 @@ customerRouter.post('/signup', parseForm, async (req, res, next) => {
             res.end();
           }
           console.log('New customer registered and added to database');
+
           res.render('user/signin');
         });
       }
@@ -111,11 +119,11 @@ customerRouter.post('/signup', parseForm, async (req, res, next) => {
 });
 
 // Login Page
-customerRouter.get("/signin", (req, res) => {
+customerRouter.get("/signin", redirectProfile ,(req, res) => {
   res.render('user/signin');
 });
 
-customerRouter.post("/signin", parseForm, (req, res) => {
+customerRouter.post("/signin", redirectProfile, parseForm, (req, res) => {
   var username = req.body.username;
   var password = req.body.password;
   console.log(username);
@@ -139,6 +147,8 @@ customerRouter.post("/signin", parseForm, (req, res) => {
           console.log('Successful Login - Session created.')
           req.session.loggedin = true;
           req.session.username = username;
+          req.session.memID = memID;
+          console.log("session username: " + req.session.memID);
           let checkAdmin = "select isAdmin from customer where username = ?";
           db.query(checkAdmin, [username], (err, result, fields)=>{
             if(err){
@@ -146,6 +156,7 @@ customerRouter.post("/signin", parseForm, (req, res) => {
               res.send(500);
             }
             if(result[0].isAdmin === 1){
+              req.session.adminLogin = true;
               res.redirect("/admin");
             }
             else{

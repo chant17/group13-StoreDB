@@ -10,19 +10,33 @@ var path = require('path');
 app.use(express.static(path.join(__dirname + "/public")));
 //ROUTES VARIABLE
 const session = require('express-session');
-var cookieParser = require('cookie-parser');
-var passport = require('passport');
-var flash = require('connect-flash');
+const cookieParser = require('cookie-parser');
+const passport = require('passport');
+const initializePassport = require("./config/passport");
+const flash = require('connect-flash');
+
+
 
 // Middleware and stuff
 app.use(morgan('dev'));
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
 app.use(bodyParser.json());
 app.use(cookieParser());
-app.use(session({ secret: 'secretKey', resave: false, saveUninitialized: false }));
+app.use(session({
+  secret: 'secretKey',
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    maxAge: 1000 * 60 * 60 * 2,
+    sameSite: true,
+
+  }
+}));
 app.use(flash());
-app.use(passport.initialize());
-app.use(passport.session());
+// app.use(passport.initialize());
+// app.use(passport.session());
 
 //Routes Variables
 const indexRouter = require("./routes/index.js");
@@ -39,7 +53,7 @@ app.use("/department", departmentRouter);
 app.use("/cart", cartRouter);
 app.use("/admin", adminRouter);
 app.use("/", indexRouter);
- 
+
 //----------------------
 const PORT = process.env.PORT || 3666;
 

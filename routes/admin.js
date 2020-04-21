@@ -8,8 +8,16 @@ var parseForm = bodyParser.urlencoded({
     extended: false
 });
 
+//middleware
+const redirectLogin = (req, res, next) => {
+    if (!req.session.adminLogin) {
+        res.redirect('/customer/signin');
+    } else {
+        next();
+    }
+}
 
-adminRouter.get("/", (req, res, next) => {
+adminRouter.get("/", redirectLogin, (req, res, next) => {
 
     db.query("select * from customer", (err, result, fields) => {
         res.render("user/admin");
@@ -17,10 +25,10 @@ adminRouter.get("/", (req, res, next) => {
 
 });
 
-adminRouter.get("/add", (req, res, next) => {
+adminRouter.get("/add", redirectLogin ,(req, res, next) => {
     res.render("user/addAdmin");
 });
-adminRouter.post("/addPost", parseForm, (req, res) => {
+adminRouter.post("/addPost", redirectLogin, parseForm, (req, res) => {
     let prodId = makeid(5);
     let dept = req.body.department;
     let name = req.body.name;
@@ -46,7 +54,7 @@ adminRouter.post("/addPost", parseForm, (req, res) => {
 
 });
 
-adminRouter.get("/update", (req, res, next) => {
+adminRouter.get("/update", redirectLogin ,(req, res, next) => {
 
     // db.query("select * from customer", (err, result, fields) => {
     //     res.render("user/admin");    
@@ -95,7 +103,7 @@ adminRouter.post("/modifyProd", parseForm, (req, res, next) => {
 
 });
 
-adminRouter.get("/report", (req, res, next) => {
+adminRouter.get("/report", redirectLogin ,(req, res, next) => {
 
     // db.query("select * from customer", (err, result, fields) => {
     //     res.render("user/admin");    
@@ -161,7 +169,7 @@ adminRouter.post("/deptReport", parseForm, (req, res, next) => {
 
 });
 
-adminRouter.get("/view", (req, res, next) => {
+adminRouter.get("/view",redirectLogin, (req, res, next) => {
 
     db.query("select * from customer", (err, result, fields) => {
         res.render("user/viewAdmin", {
@@ -171,7 +179,7 @@ adminRouter.get("/view", (req, res, next) => {
 
 });
 
-adminRouter.get("/deleteUser/:id", (req, res, next) => {
+adminRouter.get("/deleteUser/:id", redirectLogin , (req, res, next) => {
     let id = req.params.id;
     let sql = "DELETE FROM customer WHERE membership_ID = ?"
     db.query(sql, [id], (err, result, fields) => {
@@ -186,7 +194,7 @@ adminRouter.get("/deleteUser/:id", (req, res, next) => {
 
 });
 
-adminRouter.get("/delete", (req, res) => {
+adminRouter.get("/delete",redirectLogin, (req, res) => {
     let sql = "SELECT * FROM product";
     //let cartId = req.params.id;
     db.query(sql, (err, result, fields) => {
@@ -203,7 +211,7 @@ adminRouter.get("/delete", (req, res) => {
 });
 
 //Update the stock when user buys product
-adminRouter.get('/delete/:id', (req, res) => { //the id here would be the product_ID
+adminRouter.get('/delete/:id', redirectLogin ,(req, res) => { //the id here would be the product_ID
     let name = req.params.id;
     let sql = "DELETE FROM product WHERE product_ID = ?"
     db.query(sql, [name], (err, result, fields) => {
@@ -233,14 +241,6 @@ function changeDate(data) {
     return result;
 }
 
-function sliceDate(data) {
-    var result = '';
-    result += data.slice(4, 15);
-    return result;
-}
 
-// let j = [];
-// j.push({"data": "ok"});
-// console.log(j[0].data);
 
 module.exports = adminRouter;
