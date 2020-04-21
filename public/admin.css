@@ -1,39 +1,44 @@
 @import url('https://fonts.googleapis.com/css?family=Poppins&display=swap');
 
-body{
-    background: #f2f2f2;
+
+body {
+    background-image: url("https://www.elsetge.cat/myimg/f/1-10701_desktop-wallpapers-hd-low-poly-desktop-background.png");
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
     font-family: 'Poppins', sans-serif;
 }
 
-h3{
+h3 {
     font-family: 'Poppins', sans-serif;
 }
 
-.social-box .box{
-    background: rgb(219, 233, 238);
-    border-radius: 10px; 
+.social-box .box {
+    background: rgb(233, 177, 155);
+    border-radius: 10px;
     padding: 40px 10px;
     margin: 20px 0px;
     cursor: pointer;
     transition: all 0.5s ease-out;
 }
 
-.social-box .box:hover{
-   box-shadow: 0 0 6px #4183D7;
+.social-box .box:hover {
+    box-shadow: 0 0 6px rgb(221, 101, 21);
 }
 
-.social-box .box .box-text{
-    margin:20px 0px;
+.social-box .box .box-text {
+    margin: 20px 0px;
     font-size: 15px;
     line-height: 30px;
 }
 
-.social-box .box .box-btn a{
+.social-box .box .box-btn a {
     text-decoration: none;
-    color: #4183D7;
+    color: rgb(221, 101, 21);
     font-size: 16px;
 }
 
-.fa{
-     color:#4183D7;
+.fa {
+    color: rgb(221, 101, 21);
 }

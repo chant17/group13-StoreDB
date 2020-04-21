@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/admin.css">
+    <style>
+        body {
+            background: rgb(228, 208, 200);
+        }
+    </style>
+    <title>Add Product</title>
+</head>
+
+<body>
+    <%- include('../partials/header') %>
+    <% let clicked = 0; %>
+    <div class="well">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>transactionID</th>
+                    <th>Membership ID</th>
+                    <th>Order Date</th>
+                    <th>Expected Delivery</th>
+                    <th>Order Status</th>
+                    <th>Total Amount</th>
+                    <th></th>
+                    <th style="width: 36px;"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <% for(var i=0;i<data.length;i++){ %>
+                <tr>
+                    <td><%=data[i].transaction_ID %></td>
+                    <td><%=data[i].FK_member_transaction%></td>
+                    <td><%=data[i].order_date%></td>
+                    <td><%=data[i].expected_Delivery%></td>
+                    <% if(data[i].order_status === 0){ %>
+                    <td>In Progress <a href="changeProgress/<%= data[i].transaction_ID %>" <button type="button" class="btn btn-outline-danger"> <i
+                                class="fa fa-trash"></i> </button></a></td>
+                    <% }else{ %>
+                    <td>Delivered</td>
+                    <% } %>
+                    <td><%=data[i].amount%></td>
+                    <td><a href="/admin" <button type="button" class="btn btn-outline-danger"> <i
+                                class="fa fa-trash"></i> </button></a></td>
+                </tr>
+
+                <% } %>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td><a href="/admin" class="btn btn-warning"><i class="fa fa-angle-left"></i> Back to Admin Page</a>
+                    </td>
+                    <td colspan="2" class="hidden-xs"></td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+
+
+
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
+    </script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
+    </script>
+    <script>
+        function myFunction(ok) {
+            clicked = ok;
+        }
+    </script>
+</body>
+
+</html>

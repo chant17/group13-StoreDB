@@ -9,6 +9,11 @@
 
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
   <link rel="stylesheet" href="/admin.css">
+  <style>
+    body{
+      background: rgb(228, 208, 200);
+    }
+  </style>
   <title>Add Product</title>
 </head>
 
@@ -38,23 +43,24 @@
           <td><%=data[i].username%></td>
           <td><%=data[i].email%></td>
           <td><%=data[i].store_credit%></td>
-          <td><a href="/admin/deleteUser/<%=data[i].membership_ID%>" <button type="button" class="btn btn-outline-danger"> <i class="fa fa-trash"></i> </button></a></td>
+          <td><a href="/admin/deleteUser/<%=data[i].membership_ID%>" <button type="button"
+              class="btn btn-outline-danger"> <i class="fa fa-trash"></i> </button></a></td>
         </tr>
 
         <% } %>
       </tbody>
       <tfoot>
         <tr>
-            <td><a href="/admin" class="btn btn-warning"><i class="fa fa-angle-left"></i> Back to Admin Page</a>
-            </td>
-            <td colspan="2" class="hidden-xs"></td>
+          <td><a href="/admin" class="btn btn-warning"><i class="fa fa-angle-left"></i> Back to Admin Page</a>
+          </td>
+          <td colspan="2" class="hidden-xs"></td>
         </tr>
       </tfoot>
     </table>
   </div>
 
 
- 
+
 
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
     integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">

@@ -225,6 +225,40 @@ adminRouter.get('/delete/:id', redirectLogin ,(req, res) => { //the id here woul
     res.redirect('/admin/delete');
 });
 
+adminRouter.get('/order', redirectLogin ,(req, res) => { //the id here would be the product_ID
+    
+    let sql = "select transaction_ID, FK_member_transaction, order_date, expected_Delivery, order_status, p.amount from order_information o, payment_information p where o.FK_payment_ID = p.checkNum;";
+    db.query(sql, (err, result, fields) => {
+        if (err) {
+            console.log("Failed to query " + err);
+            res.sendStatus(500) //send the error to the browser
+            res.end();
+            return
+        }
+        res.render('user/orderAdmin',{
+            data: result
+        });
+    });
+    
+});
+
+adminRouter.get('/changeProgress/:transID', redirectLogin ,(req, res) => { //the id here would be the product_ID
+    let transID = req.params.transID;
+    let sql = "UPDATE order_information SET order_status = 1 WHERE transaction_ID = ?";
+    db.query(sql, [transID],(err, result, fields) => {
+        if (err) {
+            console.log("Failed to query " + err);
+            res.sendStatus(500) //send the error to the browser
+            res.end();
+            return
+        }
+        res.redirect('/admin/order');
+    });
+    
+});
+
+
+
 function makeid(length) {
     var result = '';
     var characters = '0123456789';

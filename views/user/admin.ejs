@@ -14,86 +14,114 @@
 
 <body>
     <%- include('../partials/header') %>
-    
+
     <div class="social-box">
         <div class="container">
             <h3 class="my-4">Welcome to Admin Page!</h3>
             <div class="row">
 
-                <div class="col-lg-4 col-xs-12 text-center">
-                    <div class="box">
-                        <i class="fa fa-plus-circle fa-3x" aria-hidden="true"></i>
-                        <div class="box-title">
-                            <h3>Add Product</h3>
-                        </div>
-                        <div class="box-text">
-                            <span>Add new product to the inventory</span>
-                        </div>
-                        <div class="box-btn">
-                            <a href="/admin/add">Add Product</a>
+                <a href="/admin/add" class="text-dark">
+                    <div class="col-lg-4 col-xs-12 text-center">
+                        <div class="box">
+                            <i class="fa fa-plus-circle fa-3x" aria-hidden="true"></i>
+                            <div class="box-title">
+                                <h3>Add Product</h3>
+                            </div>
+                            <div class="box-text">
+                                <span>Add new product to the inventory</span>
+                            </div>
+                            <div class="box-btn">
+                                <a href="/admin/add">Add Product</a>
+                            </div>
                         </div>
                     </div>
-                </div>
+                </a>
 
-                <div class="col-lg-4 col-xs-12  text-center">
-                    <div class="box">
-                        <i class="fa fa-exchange fa-3x" aria-hidden="true"></i>
-                        <div class="box-title">
-                            <h3>Update Product</h3>
-                        </div>
-                        <div class="box-text">
-                            <span>Update the product information</span>
-                        </div>
-                        <div class="box-btn">
-                            <a href="/admin/update">Update Product</a>
+                <a href="/admin/update" class="text-dark">
+                    <div class="col-lg-4 col-xs-12  text-center">
+                        <div class="box">
+                            <i class="fa fa-exchange fa-3x" aria-hidden="true"></i>
+                            <div class="box-title">
+                                <h3>Update Product</h3>
+                            </div>
+                            <div class="box-text">
+                                <span>Update the product information</span>
+                            </div>
+                            <div class="box-btn">
+                                <a href="/admin/update">Update Product</a>
+                            </div>
                         </div>
                     </div>
-                </div>
+                </a>
 
-                <div class="col-lg-4 col-xs-12 text-center">
-                    <div class="box">
-                        <i class="fa fa-folder-open fa-3x" aria-hidden="true"></i>
-                        <div class="box-title">
-                            <h3>Product Report</h3>
-                        </div>
-                        <div class="box-text">
-                            <span>Provides Montly Sale Report/Other Reports</span>
-                        </div>
-                        <div class="box-btn">
-                            <a href="/admin/report">Show Report</a>
+                <a href="/admin/report" class="text-dark">
+                    <div class="col-lg-4 col-xs-12 text-center">
+                        <div class="box">
+                            <i class="fa fa-folder-open fa-3x" aria-hidden="true"></i>
+                            <div class="box-title">
+                                <h3>Product Report</h3>
+                            </div>
+                            <div class="box-text">
+                                <span>Provides Montly Sale Report/Other Reports</span>
+                            </div>
+                            <div class="box-btn">
+                                <a href="/admin/report">Show Report</a>
+                            </div>
                         </div>
                     </div>
-                </div>
+                </a>
 
-                <div class="col-lg-4 col-xs-12 text-center">
-                    <div class="box">
-                        <i class="fa fa fa-users fa-3x" aria-hidden="true"></i>
-                        <div class="box-title">
-                            <h3>View Current Customers</h3>
-                        </div>
-                        <div class="box-text">
-                            <span>Display All the current customers with their information</span>
-                        </div>
-                        <div class="box-btn">
-                            <a href="/admin/view">Display Customers</a>
+                <a href="/admin/view" class="text-dark">
+                    <div class="col-lg-4 col-xs-12 text-center">
+                        <div class="box">
+                            <i class="fa fa fa-users fa-3x" aria-hidden="true"></i>
+                            <div class="box-title">
+                                <h3>View Customers</h3>
+                            </div>
+                            <div class="box-text">
+                                <span>Display All the current customers</span>
+                            </div>
+                            <div class="box-btn">
+                                <a href="/admin/view">Display Customers</a>
+                            </div>
                         </div>
                     </div>
-                </div>
+                </a>
 
-                <div class="col-lg-4 col-xs-12 text-center">
-                    <div class="box">
-                        <i class="fa fa-minus-circle fa-3x" aria-hidden="true"></i>
-                        <div class="box-title">
-                            <h3>Delete Product</h3>
-                        </div>
-                        <div class="box-text">
-                            <span>Remove any specified product from display</span>
-                        </div>
-                        <div class="box-btn">
-                            <a href="/admin/delete">Delete Product</a>
+                <a href="/admin/delete" class="text-dark">
+                    <div class="col-lg-4 col-xs-12 text-center">
+                        <div class="box">
+                            <i class="fa fa-minus-circle fa-3x" aria-hidden="true"></i>
+                            <div class="box-title">
+                                <h3>Delete Product</h3>
+                            </div>
+                            <div class="box-text">
+                                <span>Remove any specified product from display</span>
+                            </div>
+                            <div class="box-btn">
+                                <a href="/admin/delete">Delete Product</a>
+                            </div>
                         </div>
                     </div>
-                </div>
+                </a>
+
+                <a href="/admin/order" class="text-dark">
+                    <div class="col-lg-4 col-xs-12 text-center">
+                        <div class="box">
+                            <i class="fa fa-info fa-3x" aria-hidden="true"></i>
+                            <div class="box-title">
+                                <h3>View Order</h3>
+                            </div>
+                            <div class="box-text">
+                                <span>Display all orders/Change order status</span>
+                            </div>
+                            <div class="box-btn">
+                                <a href="/admin/order">Display order</a>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+
             </div>
         </div>
     </div>
