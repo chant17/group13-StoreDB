@@ -233,6 +233,7 @@ adminRouter.get('/order', redirectLogin ,(req, res) => { //the id here would be 
             console.log("Failed to query " + err);
             res.sendStatus(500) //send the error to the browser
             res.end();
+        
             return
         }
         res.render('user/orderAdmin',{

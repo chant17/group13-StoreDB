@@ -7,6 +7,10 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <style>
+        @import url('https://fonts.googleapis.com/css?family=Poppins&display=swap');
+        body{
+            font-family: 'Poppins', sans-serif;
+        }
         html {
             height: 100%;
         }
@@ -79,9 +83,9 @@
         <div class="card-deck mx-auto my-3">
             <% for(var j=0; j<3; j++){ %>
             <% if(loopCounter === data.length){ %>
-                <div class="card border-0"></div>
+                <div class="card border-0 text-white bg-dark style='max-width: 18rem;'"></div>
             <% }  else{ %>
-            <div class="card">
+            <div class="card text-white bg-dark style='max-width: 18rem;'">
                 <img class="card-img-thumbnail" src="<%= data[loopCounter].imgLink %>" height=200 width=200>
                 <div class="card-body">
                     <h5 class="card-title"> <%= data[loopCounter].product_name %> </h5>
@@ -90,7 +94,7 @@
 
                     <div class="d-flex">
                         <div class="p-2"><a href="/product/cart/<%= data[loopCounter].product_ID %>" <button
-                                class="btn btn-info mr-2 my-2 my-sm-0" type="Order">Add to cart</button></a></div>
+                                class="btn btn-outline-light mr-2 my-2 my-sm-0" type="Order">Add to cart</button></a></div>
                         <div class="ml-auto p-2">$<%= data[loopCounter].buy_price %> </div>
                     </div>
 

@@ -10,6 +10,11 @@
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/admin.css">
     <link href="https://www.eyecon.ro/bootstrap-datepicker/css/datepicker.css" rel="stylesheet">
+    <style>
+        body {
+            background: rgb(228, 208, 200);
+        }
+    </style>
     <title>Add Product</title>
 </head>
 
@@ -25,17 +30,18 @@
                     </tr>
                 </thead>
                 <% for(var i=0; i < dataUno.length; i++){ %>
-                    <tr>
-                        <td><%= dataUno[i].date %></td>
-                        <td><%= dataUno[i].total %></td>
-                    </tr>
+                <tr>
+                    <td><%= dataUno[i].date %></td>
+                    <td><%= dataUno[i].total %></td>
+                </tr>
                 <% } %>
 
             </table>
         </div>
-        <h5 class="my-4 mb-2">Day with the highest revenue: <a class="text-success"><%= dataDosDos %></a>  with the revenue of: <a class="text-success"><%= dataDos %></a> </h5>
+        <h5 class="my-4 mb-2">Day with the highest revenue: <a class="text-success"><%= dataDosDos %></a> with the
+            revenue of: <a class="text-success"><%= dataDos %></a> </h5>
         <h4 class="my-2">Total Gross Revenue: <a class="text-success"><%= dataTres %></a> </h4>
-        
+
         <tfoot>
             <tr>
                 <td><a href="report" class="btn btn-warning"><i class="fa fa-angle-left"></i> Go back to report</a></td>

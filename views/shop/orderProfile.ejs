@@ -8,7 +8,14 @@
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="/admin.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Poppins&display=swap');
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: rgb(228, 208, 200);
+        }
+    </style>
     <title>Orders</title>
 </head>
 
@@ -29,7 +36,7 @@
                 </tr>
             </thead>
             <tbody>
-                
+
                 <% for(var i=0;i<data.length;i++){ %>
                 <tr>
                     <% var status = "Delivered";
@@ -48,7 +55,8 @@
             </tbody>
             <tfoot>
                 <tr>
-                    <td><a href="/customer/profile/<%= memID %>" class="btn btn-warning"><i class="fa fa-angle-left"></i> Back to
+                    <td><a href="/customer/profile/<%= memID %>" class="btn btn-warning"><i
+                                class="fa fa-angle-left"></i> Back to
                             Profile Page</a>
                     </td>
                     <td colspan="2" class="hidden-xs"></td>

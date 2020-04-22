@@ -10,6 +10,11 @@
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/admin.css">
     <link href="https://www.eyecon.ro/bootstrap-datepicker/css/datepicker.css" rel="stylesheet">
+    <style>
+        body {
+            background: rgb(228, 208, 200);
+        }
+    </style>
     <title>Add Product</title>
 </head>
 
@@ -29,21 +34,23 @@
                     </tr>
                 </thead>
                 <% for(var i=0; i<stock.length; i++){ %>
-                    <tr>
-                        <td> <%= stock[i].product_id %> </td>
-                        <td> <%= stock[i].product_name %> </td>
-                        <td> <%= stock[i].buy_price %> </td>
-                        <td> <%= stock[i].vendor %> </td>
-                        <td> <%= stock[i].quantity_inStock %> </td>
+                <tr>
+                    <td> <%= stock[i].product_id %> </td>
+                    <td> <%= stock[i].product_name %> </td>
+                    <td> <%= stock[i].buy_price %> </td>
+                    <td> <%= stock[i].vendor %> </td>
+                    <td> <%= stock[i].quantity_inStock %> </td>
 
-                    </tr>
+                </tr>
                 <% } %>
 
             </table>
         </div>
         <h4 class="my-2">Average Product Cost: <a class="text-success"><%= average.toFixed(2) %></a> </h4>
-        <h4 class="my-4 mb-2">Cheapest Product: <a class="text-success"><%= minimumProd %></a> at the price of <a class="text-success"> <%= minimum %> </a></h4>
-        <h4 class="my-4 mb-2">Most Expensive Product: <a class="text-success"><%= maximumProd %></a> at the price of <a class="text-success"><%= maximum %></a> </h4>
+        <h4 class="my-4 mb-2">Cheapest Product: <a class="text-success"><%= minimumProd %></a> at the price of <a
+                class="text-success"> <%= minimum %> </a></h4>
+        <h4 class="my-4 mb-2">Most Expensive Product: <a class="text-success"><%= maximumProd %></a> at the price of <a
+                class="text-success"><%= maximum %></a> </h4>
 
         <tfoot>
             <tr>

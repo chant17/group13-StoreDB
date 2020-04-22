@@ -30,7 +30,6 @@
                     <th>Expected Delivery</th>
                     <th>Order Status</th>
                     <th>Total Amount</th>
-                    <th></th>
                     <th style="width: 36px;"></th>
                 </tr>
             </thead>
@@ -43,13 +42,11 @@
                     <td><%=data[i].expected_Delivery%></td>
                     <% if(data[i].order_status === 0){ %>
                     <td>In Progress <a href="changeProgress/<%= data[i].transaction_ID %>" <button type="button" class="btn btn-outline-danger"> <i
-                                class="fa fa-trash"></i> </button></a></td>
+                                class="fa fa-exchange"></i> </button></a></td>
                     <% }else{ %>
                     <td>Delivered</td>
                     <% } %>
                     <td><%=data[i].amount%></td>
-                    <td><a href="/admin" <button type="button" class="btn btn-outline-danger"> <i
-                                class="fa fa-trash"></i> </button></a></td>
                 </tr>
 
                 <% } %>

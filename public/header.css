@@ -1,3 +1,6 @@
-.navbar {
-    background-color: yellow;
+@import url('https://fonts.googleapis.com/css?family=Poppins&display=swap');
+
+body {
+    background: rgb(228, 208, 200);
+    font-family: 'Poppins', sans-serif;
 }

@@ -15,7 +15,7 @@ const redirectLogin = (req, res, next) => {
 //Get all product within the requested department
 const productRouter = express.Router();
 productRouter.get("/cart/:id", redirectLogin ,(req, res) => {
-  let sql = "SELECT product_name, buy_price FROM product WHERE product_ID = ?";
+  let sql = "SELECT * FROM product WHERE product_ID = ?";
   let prodID = req.params.id;
   let prodName = "";
   let prodPrice = "";
@@ -66,7 +66,7 @@ productRouter.get("/cart/:id", redirectLogin ,(req, res) => {
             "INSERT INTO cart (FK_cart_ID, FK_product_cart, product_name, price, quantity, product_desc, imgLink) VALUES (?,?,?,?,1,?,?)";
           db.query(
             sql2,
-            [cartID, prodID, prodName, prodPrice, imgLink, prodDesc],
+            [cartID, prodID, prodName, prodPrice, prodDesc, imgLink],
             (err, result2, fields) => {
               if (err) {
                 console.log("Failed to query " + err);

@@ -7,13 +7,20 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Poppins&display=swap');
+        body{
+            background: rgb(228, 208, 200);
+            font-family: 'Poppins', sans-serif;
+        }
+    </style>
     <title>Store Database</title>
 </head>
 
 <body>
     <%- include ('../partials/header.ejs') %>
     <div class="container-fluid">
-        <h5 class="mx-3">Product Deletion</h5>
+        <h5 class="my-3">Product Deletion</h5>
         <table id="cart" class="table table-hover table-condensed">
             <thead>
                 <tr>
@@ -29,8 +36,8 @@
                 <tr>
                     <td data-th="Product">
                         <div class="row">
-                            <div class="col-sm-2 hidden-xs"><img src="http://placehold.it/100x100" alt="..."
-                                    class="img-responsive" /></div>
+                            <div class="col-sm-2 hidden-xs"><img src="<%= data[i].imgLink %>" alt="..."
+                                    width = 60px height = 60px /></div>
                             <div class="col-sm-10 ">
                                 <h4> <%= data[i].product_name %></h4>
                                 <p> <%= data[i].product_desc %> </p>
@@ -38,7 +45,7 @@
                         </div>
                     </td>
                     <td data-th="ProductID"><%= data[i].product_ID %></td>
-                    <td data-th="Price">$<%= data[i].buy_price %></td>   
+                    <td data-th="Price">$<%= data[i].buy_price %></td>
                     <td data-th="Quantity" class="text-center"><%= data[i].quantity_inStock %></td>
                     <td class="actions" data-th="">
                         <a href="/admin/delete/<%= data[i].product_ID %>" <button class="btn btn-danger btn-sm"><i
