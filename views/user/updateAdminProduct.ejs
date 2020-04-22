@@ -9,6 +9,11 @@
 
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/admin.css">
+    <style>
+        body {
+            background: rgb(228, 208, 200);
+        }
+    </style>
     <title>Add Product</title>
 </head>
 
@@ -21,21 +26,22 @@
                 <form action="/admin/modifyProd" method="POST">
 
                     <div class="form-group">
-                        <label for="name">Product ID</label>
+                        <label for="name" class="text-white bg-dark">Product ID</label>
                         <div class="input-group">
-                            <input type="text" class="form-control" name="prodID" id="prodID" value="<%=data[0].product_ID%>" readonly></input>
+                            <input type="text" class="form-control" name="prodID" id="prodID"
+                                value="<%=data[0].product_ID%>" readonly></input>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="name">Product Name</label>
+                        <label for="name" class="text-white bg-dark">Product Name</label>
                         <div class="input-group">
-                            <input type="text" class="form-control" name="name" id="name" value="<%=data[0].product_name%>"
-                                placeholder="Enter the product name" />
+                            <input type="text" class="form-control" name="name" id="name"
+                                value="<%=data[0].product_name%>" placeholder="Enter the product name" />
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="prodDesc">Product Description</label>
+                        <label for="prodDesc" class="text-white bg-dark">Product Description</label>
                         <div class="input-group">
                             <input type="text" class="form-control" name="prodDesc" value="<%= data[0].product_desc %>"
                                 placeholder="Enter product description" />
@@ -43,7 +49,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="price">Price</label>
+                        <label for="price" class="text-white bg-dark">Price</label>
                         <div class="input-group">
                             <input type="text" class="form-control" name="price" value="<%= data[0].buy_price %>"
                                 placeholder="Enter product's price" />
@@ -51,7 +57,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="vendor">Product's vendor</label>
+                        <label for="vendor" class="text-white bg-dark">Product's vendor</label>
                         <div class="input-group">
                             <input type="text" class="form-control" name="vendor" value="<%=data[0].vendor%>"
                                 placeholder="Enter product's vendor" />
@@ -59,22 +65,22 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="quantity">Quantity</label>
+                        <label for="quantity" class="text-white bg-dark">Quantity</label>
                         <div class="input-group">
-                            <input type="Number" class="form-control" name="quantity" value="<%=data[0].quantity_inStock%>"
-                                placeholder="Enter product's quantity" />
+                            <input type="Number" class="form-control" name="quantity"
+                                value="<%=data[0].quantity_inStock%>" placeholder="Enter product's quantity" />
                         </div>
                     </div>
-                    
+
                     <div class="form-group">
-                        <label for="img">Product's image link</label>
+                        <label for="img" class="text-white bg-dark">Product's image link</label>
                         <div class="input-group">
                             <input type="text" class="form-control" name="img" value="<%=data[0].imgLink%>"
                                 placeholder="Enter product's image link" />
                         </div>
                     </div>
-                    
-                    <button type="submit" class="btn btn-outline-dark">SUBMIT CHANGE</button>
+
+                    <button type="submit" class="btn btn-outline-light">SUBMIT CHANGE</button>
 
                 </form>
             </div>

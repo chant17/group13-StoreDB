@@ -40,22 +40,21 @@ orderRouter.get("/orderinfo/:id/:total", parseForm, (req, res) => {
         db.query(updateCredit, [price, id], (err, result, fields) => {
             if (err) console.log("here3" + err);
         });
-        db.query(sql3, [id, paymentID, today, price], (err, result, fields) => {
-            if (err) console.log("here4" + err);
-            db.query(sql2, [transID, id, paymentID, today, sDate, sDate, cartID], (err, result, fields) => {
-                if (err) console.log("here5" + err);
-            });
-        });
 
         console.log(transID + " " + paymentID + " " + price + " " + cartID);
         let sql5 = "select FK_product_cart from cart where FK_cart_ID = ?;";
         db.query(sql5, [cartID], (err, result, fields) => {
             if (err) console.log("here 7 " + err);
-            if (result.length == 0){
-                res.redirect("/");
-                console.log("NO PRODUCT!!");
-                res.end();
-            }
+            // if (result.length == 0) {
+            //     res.redirect("/");
+            //     console.log("NO PRODUCT!!");
+            // }
+            db.query(sql3, [id, paymentID, today, price], (err, result, fields) => {
+                if (err) console.log("here4" + err);
+                db.query(sql2, [transID, id, paymentID, today, sDate, sDate, cartID], (err, result, fields) => {
+                    if (err) console.log("here5" + err);
+                });
+            });
 
             for (var i = 0; i < result.length; i++) {
                 let prodId = result[i].FK_product_cart;
@@ -67,6 +66,7 @@ orderRouter.get("/orderinfo/:id/:total", parseForm, (req, res) => {
                     }
                 });
             }
+
             db.query(sql4, [cartID], (err, result, fields) => {
                 if (err) {
                     console.log("HERE 6" + err);

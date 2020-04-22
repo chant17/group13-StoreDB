@@ -128,7 +128,7 @@ adminRouter.post("/saleReport", parseForm, (req, res, field) => {
                     dateTime = result[i].date;
                 }
             }
-            res.render("report/saleReport", {
+            res.render("report/salereport", {
                 dataUno: result,
                 dataDos: maxNum,
                 dataDosDos: dateTime,

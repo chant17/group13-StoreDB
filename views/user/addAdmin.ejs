@@ -9,6 +9,11 @@
 
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/admin.css">
+    <style>
+        body {
+            background: rgb(228, 208, 200);
+        }
+    </style>
     <title>Add Product</title>
 </head>
 
@@ -85,11 +90,6 @@
 
                 </form>
             </div>
-            <% if(data = "Failed to insert!") {%>
-                <h5><span class="badge badge-danger my-2"><%= data %></span></h5>
-            <% } else{ %>
-                <h5><span class="badge badge-info my-2"><%= data %></span></h5>
-            <% } %>
             <!--main-center"-->
         </div>
         <!--main-->
