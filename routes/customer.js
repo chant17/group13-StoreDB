@@ -295,6 +295,7 @@ customerRouter.get("/vieworder/:id", (req, res, next) => {
 customerRouter.get("/logout", (req, res, next)=>{
   try{
   req.session.destroy();
+  res.clearCookie('cookie');
   res.redirect('/');
   } catch(e){
     console.log(e);

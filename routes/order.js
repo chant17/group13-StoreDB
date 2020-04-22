@@ -35,12 +35,6 @@ orderRouter.get("/orderinfo/:id/:total", parseForm, (req, res) => {
         let cartID = result[0].cartID;
         console.log(cartID);
 
-
-        let updateCredit = "UPDATE customer SET store_credit = IFNULL(store_credit, 0) + ? where membership_id = ?;"
-        db.query(updateCredit, [price, id], (err, result, fields) => {
-            if (err) console.log("here3" + err);
-        });
-
         console.log(transID + " " + paymentID + " " + price + " " + cartID);
         let sql5 = "select FK_product_cart from cart where FK_cart_ID = ?;";
         db.query(sql5, [cartID], (err, result, fields) => {
@@ -77,6 +71,10 @@ orderRouter.get("/orderinfo/:id/:total", parseForm, (req, res) => {
                         console.log("price check error: " + err);
                     }
                     let updatedPrice = result[0].amount;
+                    let updateCredit = "UPDATE customer SET store_credit = IFNULL(store_credit, 0) + ? where membership_id = ?;"
+                    db.query(updateCredit, [updatedPrice, id], (err, result, fields) => {
+                        if (err) console.log("here3" + err);
+                    });
                     console.log("Price is: " + updatedPrice);
                     res.render('shop/orderInfo', {
                         status: 0,
