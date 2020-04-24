@@ -107,20 +107,24 @@ ALTER TABLE cart ADD FOREIGN KEY(FK_cart_ID) REFERENCES cust_cart(cartID);
 ALTER TABLE cart ADD constraint cartConst2 FOREIGN KEY(FK_cart_ID) REFERENCES cust_cart(cartID) on update cascade on delete cascade;
 ALTER TABLE cust_cart ADD FOREIGN KEY(FK_membershipID) REFERENCES customer(MEMBERSHIP_ID);
 ALTER TABLE cust_cart ADD constraint custCartConst FOREIGN KEY(FK_membershipID) REFERENCES customer(MEMBERSHIP_ID) on update cascade on delete cascade;
+ALTER TABLE customer ADD isAdmin boolean default 0;
 
 #TRIGGERS
 
+-- CART CREATION TRIGGER
 CREATE TRIGGER Cart_Creation
 AFTER INSERT ON customer
 FOR EACH ROW
 INSERT INTO cust_cart (FK_MEMBERSHIPID) SELECT MAX(membership_ID) FROM customer;
 
+
+-- RESTOCK PRODUCT TRIGGER 
 CREATE TRIGGER restock_inventory
 BEFORE INSERT on order_information
 FOR EACH ROW
 UPDATE product SET quantity_inStock = FLOOR(RAND()*(50-10+1)+10) WHERE quantity_inStock < 10;
 
-
+-- DISCOUNT PRODUCT TRIGGER 
 DELIMITER //
 CREATE TRIGGER discount
 BEFORE INSERT ON payment_information FOR EACH ROW
@@ -134,11 +138,11 @@ DELIMITER ;
 
 
 
-ALTER TABLE customer ADD isAdmin boolean default 0;
 
 
 
 -- TEST QUERIES
+UPDATE customer set store_credit = 1050 where username = 'discount';
 select * from cart;
 select * from order_information;  -- where FK_member_transaction = 7;
 select * from customer;
@@ -166,5 +170,3 @@ select * from product where product_ID = 33311;
 select * from cart;
 
 select transaction_ID, FK_member_transaction, order_date, expected_Delivery, order_status, p.amount from order_information o, payment_information p where o.FK_payment_ID = p.checkNum;
-show processlist;
-kill 3350759;
