@@ -25,7 +25,7 @@ adminRouter.get("/", redirectLogin, (req, res, next) => {
 
 });
 
-adminRouter.get("/add", redirectLogin ,(req, res, next) => {
+adminRouter.get("/add", redirectLogin, (req, res, next) => {
     res.render("user/addAdmin");
 });
 adminRouter.post("/addPost", redirectLogin, parseForm, (req, res) => {
@@ -54,7 +54,7 @@ adminRouter.post("/addPost", redirectLogin, parseForm, (req, res) => {
 
 });
 
-adminRouter.get("/update", redirectLogin ,(req, res, next) => {
+adminRouter.get("/update", redirectLogin, (req, res, next) => {
 
     // db.query("select * from customer", (err, result, fields) => {
     //     res.render("user/admin");    
@@ -103,7 +103,7 @@ adminRouter.post("/modifyProd", parseForm, (req, res, next) => {
 
 });
 
-adminRouter.get("/report", redirectLogin ,(req, res, next) => {
+adminRouter.get("/report", redirectLogin, (req, res, next) => {
 
     // db.query("select * from customer", (err, result, fields) => {
     //     res.render("user/admin");    
@@ -147,29 +147,55 @@ adminRouter.post("/deptReport", parseForm, (req, res, next) => {
     db.query("select * from product where FK_product_dept_id = ? and quantity_inStock < 15", [dept], (err, result, fields) => {
         let lowStock = result;
         db.query("select AVG(buy_price) as avgPrice from product where FK_product_dept_id = ?", [dept], (err, result, fields) => {
+            if (err) {
+                cosole.log("err");
+                res.sendStatus(500);
+                res.end();
+            }
             let avg = result[0].avgPrice;
             let sql = "select product_name, buy_price from product where FK_product_dept_id = ? and buy_price = (select min(buy_price) from product where FK_product_dept_id = ?) or buy_price = (select max(buy_price) from product where FK_product_dept_id = ?) order by buy_price;"
-            db.query(sql, [dept, dept, dept], (err, result, fields) => {
-                let min = result[0].buy_price;
-                let minProd = result[0].product_name;
-                let max = result[1].buy_price;
-                let maxProd = result[1].product_name;
-                res.render('report/deptreport', {
-                    stock: lowStock,
-                    average: avg,
-                    minimumProd: minProd,
-                    maximumProd: maxProd,
-                    minimum: min,
-                    maximum: max
+            let boQuery = "select * from product where FK_product_dept_id = ? order by product_id";
+            db.query(boQuery, [dept], (err, result, fields) => {
+                let stockInfo = result;
+                let boQuery2 = "select sum(quantity_inStock) as sumQuan from product product where FK_product_dept_id = ?";
+                db.query(boQuery2, [dept], (err, result, fields) => {
+                    if (err) {
+                        cosole.log("err");
+                        res.sendStatus(500);
+                        res.end();
+                    }
+                    let sumProd = result[0].sumQuan;
+                    db.query(sql, [dept, dept, dept], (err, result, fields) => {
+                        if (err) {
+                            cosole.log("err");
+                            res.sendStatus(500);
+                            res.end();
+                        }
+                        let min = result[0].buy_price;
+                        let minProd = result[0].product_name;
+                        let max = result[1].buy_price;
+                        let maxProd = result[1].product_name;
+                        res.render('report/deptreport', {
+                            info: stockInfo,
+                            prodSum: sumProd,
+                            stock: lowStock,
+                            average: avg,
+                            minimumProd: minProd,
+                            maximumProd: maxProd,
+                            minimum: min,
+                            maximum: max
+                        });
+                    });
                 });
             });
+
         });
     });
 
 
 });
 
-adminRouter.get("/view",redirectLogin, (req, res, next) => {
+adminRouter.get("/view", redirectLogin, (req, res, next) => {
 
     db.query("select * from customer", (err, result, fields) => {
         res.render("user/viewAdmin", {
@@ -179,7 +205,7 @@ adminRouter.get("/view",redirectLogin, (req, res, next) => {
 
 });
 
-adminRouter.get("/deleteUser/:id", redirectLogin , (req, res, next) => {
+adminRouter.get("/deleteUser/:id", redirectLogin, (req, res, next) => {
     let id = req.params.id;
     let sql = "DELETE FROM customer WHERE membership_ID = ?"
     db.query(sql, [id], (err, result, fields) => {
@@ -194,7 +220,7 @@ adminRouter.get("/deleteUser/:id", redirectLogin , (req, res, next) => {
 
 });
 
-adminRouter.get("/delete",redirectLogin, (req, res) => {
+adminRouter.get("/delete", redirectLogin, (req, res) => {
     let sql = "SELECT * FROM product";
     //let cartId = req.params.id;
     db.query(sql, (err, result, fields) => {
@@ -211,7 +237,7 @@ adminRouter.get("/delete",redirectLogin, (req, res) => {
 });
 
 //Update the stock when user buys product
-adminRouter.get('/delete/:id', redirectLogin ,(req, res) => { //the id here would be the product_ID
+adminRouter.get('/delete/:id', redirectLogin, (req, res) => { //the id here would be the product_ID
     let name = req.params.id;
     let sql = "DELETE FROM product WHERE product_ID = ?"
     db.query(sql, [name], (err, result, fields) => {
@@ -225,28 +251,28 @@ adminRouter.get('/delete/:id', redirectLogin ,(req, res) => { //the id here woul
     res.redirect('/admin/delete');
 });
 
-adminRouter.get('/order', redirectLogin ,(req, res) => { //the id here would be the product_ID
-    
+adminRouter.get('/order', redirectLogin, (req, res) => { //the id here would be the product_ID
+
     let sql = "select transaction_ID, FK_member_transaction, order_date, expected_Delivery, order_status, p.amount from order_information o, payment_information p where o.FK_payment_ID = p.checkNum;";
     db.query(sql, (err, result, fields) => {
         if (err) {
             console.log("Failed to query " + err);
             res.sendStatus(500) //send the error to the browser
             res.end();
-        
+
             return
         }
-        res.render('user/orderAdmin',{
+        res.render('user/orderAdmin', {
             data: result
         });
     });
-    
+
 });
 
-adminRouter.get('/changeProgress/:transID', redirectLogin ,(req, res) => { //the id here would be the product_ID
+adminRouter.get('/changeProgress/:transID', redirectLogin, (req, res) => { //the id here would be the product_ID
     let transID = req.params.transID;
     let sql = "UPDATE order_information SET order_status = 1 WHERE transaction_ID = ?";
-    db.query(sql, [transID],(err, result, fields) => {
+    db.query(sql, [transID], (err, result, fields) => {
         if (err) {
             console.log("Failed to query " + err);
             res.sendStatus(500) //send the error to the browser
@@ -255,7 +281,7 @@ adminRouter.get('/changeProgress/:transID', redirectLogin ,(req, res) => { //the
         }
         res.redirect('/admin/order');
     });
-    
+
 });
 
 
